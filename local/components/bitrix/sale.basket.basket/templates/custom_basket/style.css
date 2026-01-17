@@ -1,0 +1,1255 @@
+/* Start:/local/components/bitrix/sale.basket.basket/templates/custom_basket/style.css?175959273223267*/
+/* ОБЩИЕ СТИЛИ */
+:root {
+	--primary-color: #00AB9A !important;
+	/* Бирюзовый */
+	--secondary-color: #343a40 !important;
+	/* Темно-серый */
+	--light-gray: #f8f8f8;
+	/* Очень светлый серый */
+	--medium-gray: #e2dfdf;
+	/* Средний серый для границ */
+	--dark-gray: #999;
+	/* Темный серый для текста */
+	--white: #fff;
+	--orange: #ef7d60;
+	/* Оранжевый для скидок */
+	--red: #d0021b;
+	/* Красный для удаления */
+	--blue: #3d9cea;
+	/* Синий для ссылок/кнопок */
+	--blue-hover: #2882c5;
+	/* Вторичный цвет текста */
+	--border-radius-medium: 8px;
+	/* Радиус скругления для блоков */
+	--border-radius-small: 6px;
+	/* Радиус скругления для инпутов и кнопок */
+}
+
+body {
+	font-family: Arial, sans-serif;
+	color: var(--secondary-color);
+}
+
+.symbol_ruble {
+	font-family: 'rubleBitrix', Arial, sans-serif;
+}
+
+.h1 {
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	color: var(--secondary-color);
+}
+
+.h2 {
+	font-size: 24px;
+	font-weight: bold;
+	margin: 0;
+	color: var(--secondary-color);
+}
+
+.h3 {
+	font-size: 18px;
+	font-weight: normal;
+	color: var(--secondary-color);
+}
+
+.h4 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: normal;
+	color: var(--secondary-color);
+}
+
+.p2 {
+	font-size: 14px;
+	margin: 0;
+}
+
+.p3 {
+	font-size: 12px;
+	margin: 0;
+}
+
+.gray {
+	color: var(--dark-gray);
+}
+
+.orange {
+	color: var(--orange);
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.link {
+	color: var(--secondary-color);
+	text-decoration: none;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+
+
+/* ШАГ 1: ДВУХКОЛОНОЧНАЯ СТРУКТУРА */
+.cart__container {
+	display: flex;
+	align-items: flex-start;
+	gap: 30px;
+	padding-bottom: 25px;
+}
+
+.cart__main {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.cart__side {
+	flex: 0 0 350px;
+	width: 350px;
+}
+
+.basket-checkout-container.basket-checkout-container-fixed {
+	position: sticky;
+	top: 20px;
+	z-index: 100;
+	width: 100% !important;
+}
+
+.basket-checkout-container.basket-checkout-container-fixed-hide {
+	opacity: 1;
+}
+
+.basket-item-block-amount {
+	width: fit-content;
+}
+
+/* --- АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ И МОБИЛЬНЫХ --- */
+@media (max-width: 1090px) {
+	.cart__container {
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.cart__side {
+		width: 100%;
+		flex-basis: auto;
+	}
+
+	.basket-checkout-container.basket-checkout-container-fixed {
+		position: static;
+		width: auto !important;
+		padding: 0;
+		/* Убираем лишний паддинг, он будет внутри wrap */
+	}
+
+	.h1 {
+		font-size: 28px;
+	}
+}
+
+/* ШАГ 2: СПИСОК ТОВАРОВ (ФИНАЛЬНАЯ ВЕРСИЯ) */
+.basket-items-list-wrapper {
+	border: none;
+	padding: 10px 10px 10px 10px;
+	/* Скорректирован паддинг */
+}
+
+.cart__main {
+	padding: 10px 10px 10px 10px;
+	width: 100%;
+}
+
+@media (max-width: 1090px) {
+	.basket-items-list-wrapper {
+		padding: 10px;
+	}
+
+	.cart__main {
+		padding: 10px;
+	}
+}
+
+.cart-goods {
+	display: block;
+}
+
+/* Общие стили для контейнеров шапки и строки товара */
+.cart-goods__header,
+.cart-goods-item {
+	display: grid;
+	/* Определяем нашу сеточную структуру */
+	grid-template-columns: 20px 1fr 100px 120px 100px 20px;
+	gap: 15px;
+	/* Задаем отступ между колонками */
+	align-items: center;
+}
+
+.cart-goods__header {
+	padding-bottom: 10px;
+	border-bottom: 1px solid var(--medium-gray);
+	margin-bottom: 10px;
+}
+
+.cart-select-all--mobile {
+	display: none;
+}
+
+.cart-goods-item {
+	position: relative;
+	padding: 15px 0;
+	border-bottom: 1px solid var(--light-gray);
+	transition: background-color 0.2s ease;
+	/* Плавное изменение фона */
+}
+
+.cart-goods-item:hover {
+	background-color: var(--light-gray);
+	/* Легкий ховер эффект */
+}
+
+/* --- Сетка колонок --- */
+
+/* Колонка 1: Чекбокс */
+.cart-goods-item-checkbox {
+	width: auto;
+	/* Ширина теперь контролируется сеткой */
+	margin-right: 0;
+}
+
+/* Колонка 2: Описание (растягивается) */
+.cart-goods-item-description {
+	flex: none;
+	min-width: 230px;
+	/* Важно для grid, чтобы контент мог сжиматься */
+}
+
+.cart-goods-item-description__main {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: inherit;
+	gap: 15px;
+}
+
+.cart-goods-item-description__img--wrap {
+	flex-shrink: 0;
+	width: 80px;
+	height: 80px;
+	border: 1px solid var(--medium-gray);
+	border-radius: 4px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--white);
+}
+
+.cart-goods-item-description__img {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+.cart-goods-item-description__text .h4 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.cart-goods-item-description__text .link:hover {
+	color: var(--primary-color);
+	/* Ссылка становится бирюзовой при наведении */
+	text-decoration: none;
+}
+
+/* Колонка 3: Цена */
+.cart-goods-item__price {
+	/* min-width: 80px; */
+	width: auto;
+	flex-shrink: unset;
+}
+
+/* Колонка 4: Количество */
+.cart-goods-item__quantity {
+	/* min-width: 140px; */
+	width: auto;
+	flex-shrink: unset;
+	/* Центрируем счетчик */
+}
+
+/* Колонка 5: Сумма */
+.cart-goods-item__sum {
+	/* min-width: 80px; */
+	width: auto;
+	flex-shrink: unset;
+}
+
+/* Колонка 6: Кнопка удаления */
+.cart-goods-item-buttons {
+	/* min-width: 40px; */
+	width: auto;
+	flex-shrink: unset;
+}
+
+/* Стилизация текста и элементов внутри колонок */
+.cart-goods__header p {
+	margin: 0;
+	color: var(--dark-gray);
+	font-size: 14px;
+	/* text-transform: uppercase; */
+	/* Заголовки колонок в верхнем регистре */
+}
+
+.cart-goods-item__price .p2,
+.cart-goods-item__price .p3 {
+	margin: 0;
+}
+
+.p2.orange {
+	color: var(--orange);
+	font-size: 16px;
+	font-weight: bold;
+	/* Цена товара жирным */
+}
+
+.p3.gray.crossed {
+	color: var(--dark-gray);
+	text-decoration: line-through;
+}
+
+.cart-goods-item-counter {
+	display: flex;
+	align-items: center;
+	border: 1px solid var(--medium-gray);
+	border-radius: 4px;
+	padding: 3px;
+	/* Уменьшен паддинг */
+	background-color: var(--white);
+}
+
+.cart-goods-item-counter__button {
+	cursor: pointer;
+	text-decoration: none;
+	color: var(--secondary-color);
+	font-weight: bold;
+	/* Кнопки жирные */
+	padding: 0 8px;
+	/* Уменьшен паддинг */
+	font-size: 18px;
+	/* Уменьшен размер шрифта */
+	line-height: 1;
+	user-select: none;
+	transition: color 0.2s ease;
+}
+
+.cart-goods-item-counter__button:hover {
+	color: var(--primary-color);
+	/* Бирюзовый при наведении */
+}
+
+.cart-goods-item-counter__button.disabled {
+	color: #ccc;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.cart-goods-item-counter input {
+	width: 40px;
+	text-align: center;
+	border: none;
+	outline: none;
+	font-size: 16px;
+	color: var(--secondary-color);
+	-moz-appearance: textfield;
+}
+
+.cart-goods-item-counter input::-webkit-outer-spin-button,
+.cart-goods-item-counter input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.cart-goods-item__sum.bold {
+	font-weight: bold;
+	/* color: var(--primary-color); */
+	/* Сумма бирюзовая */
+	font-size: 18px;
+	/* Сделать крупнее */
+}
+
+.cart-goods-item-buttons__remove {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	transition: background-color 0.2s ease;
+}
+
+.cart-goods-item-buttons__remove:hover {
+	background-color: rgba(var(--red), 0.1);
+}
+
+
+.cart-goods-item-buttons__remove svg path,
+.cart-goods-item-buttons__remove svg rect {
+	transition: all 0.2s ease-in-out;
+	stroke: var(--dark-gray);
+	fill: var(--dark-gray);
+}
+
+.cart-goods-item-buttons__remove:hover svg path,
+.cart-goods-item-buttons__remove:hover svg rect {
+	stroke: var(--red);
+	fill: var(--red);
+}
+
+/* --- СТИЛЬНЫЙ ЧЕКБОКС --- */
+.checkbox__input {
+	accent-color: #00a494;
+}
+
+/* Стили для строки отложенных товаров */
+.cart-goods-item.delayed {
+	opacity: 0.7;
+	background-color: var(--light-gray);
+	/* Светло-серый фон для отложенных */
+}
+
+.cart-goods-item.delayed .cart-goods-item-buttons__remove:hover svg path,
+.cart-goods-item.delayed .cart-goods-item-buttons__remove:hover svg rect {
+	stroke: var(--red);
+	fill: var(--red);
+}
+
+/* --- АДАПТИВНОСТЬ СПИСКА ТОВАРОВ --- */
+
+/* +++ START NEW CODE +++ */
+/* --- АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ (991px) --- */
+@media (max-width: 991px) {
+
+	.cart-goods__header,
+	.cart-goods-item {
+		/* Уменьшаем отступы и размеры колонок для экранов поменьше */
+		grid-template-columns: 20px 1fr 85px 110px 85px 20px;
+		gap: 10px;
+	}
+
+	.cart-goods-item-description {
+		min-width: 180px;
+		/* Уменьшаем минимальную ширину */
+	}
+
+	.cart-goods-item-description__img--wrap {
+		width: 60px;
+		height: 60px;
+	}
+
+	.cart-goods-item-description__text .h4 {
+		font-size: 15px;
+	}
+
+	.cart-goods__header p {
+		font-size: 13px;
+		/* Уменьшаем шрифт заголовков */
+	}
+
+	.p2.orange {
+		font-size: 15px;
+		/* Уменьшаем шрифт цены */
+	}
+
+	/* Делаем счетчик компактнее */
+	.cart-goods-item-counter input {
+		width: 30px;
+		font-size: 15px;
+	}
+
+	.cart-goods-item-counter__button {
+		padding: 0 7px;
+		font-size: 17px;
+	}
+
+	.cart-goods-item__sum.bold {
+		font-size: 17px;
+		/* Уменьшаем шрифт суммы */
+	}
+}
+
+/* +++ END NEW CODE +++ */
+
+
+@media (max-width: 767px) {
+	.h1 {
+		font-size: 24px;
+	}
+
+	/* Скрываем заголовки колонок на мобильных */
+	.cart-goods__header {
+		display: none;
+	}
+
+	.basket-items-list-wrapper {
+		padding: 0px;
+	}
+
+	.cart-select-all--mobile {
+		display: flex;
+		flex-wrap: nowrap;
+		flex-direction: row;
+	}
+
+	.cart-goods-item-counter {
+		padding: 5px;
+	}
+
+	.cart-goods-item-counter__button {
+		font-size: 19px;
+	}
+
+	.cart-goods-item-counter input {
+		width: 40px;
+		font-size: 16px;
+	}
+
+	.cart-goods-item {
+		display: flex;
+		/* Переключаемся на flex для мобильной версии */
+		flex-wrap: wrap;
+		/* Элементы переносят строки */
+		padding: 15px 10px;
+		/* Уменьшаем горизонтальный паддинг */
+		position: relative;
+		/* Для позиционирования кнопки удаления */
+		border: 1px solid var(--light-gray);
+		border-radius: var(--border-radius-medium);
+		box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
+		margin-bottom: 5px;
+
+	}
+
+	.cart-goods-item-checkbox {
+		order: 1;
+		margin-right: 10px;
+		/* Меньше отступ */
+	}
+
+	.cart-goods-item-description {
+		order: 2;
+		flex: 1 1 calc(100% - 40px);
+		/* Занимает всю ширину за вычетом чекбокса */
+		min-width: unset;
+		/* Сброс min-width */
+		margin-bottom: 15px;
+		/* Отступ от нижних блоков */
+	}
+
+	.cart-goods-item-description__main {
+		flex-direction: row;
+		/* Возвращаем картинку и текст в ряд */
+		align-items: center;
+		gap: 10px;
+	}
+
+	.cart-goods-item-description__img--wrap {
+		width: 60px;
+		height: 60px;
+		margin-right: 0;
+	}
+
+	.cart-goods-item-description__text .h4 {
+		font-size: 15px;
+	}
+
+	.cart-goods-item__price {
+		order: 4;
+		flex: 0 0 50%;
+		/* Занимает половину ширины */
+		text-align: left;
+	}
+
+	.cart-goods-item__quantity {
+		order: 5;
+		flex: 0 0 50%;
+		/* Занимает половину ширины */
+		display: flex;
+		/* Добавлено для выравнивания */
+		justify-content: flex-start;
+	}
+
+	.cart-goods-item__sum {
+		order: 6;
+		flex: 1 1 100%;
+		/* Занимает всю ширину */
+		text-align: left;
+		font-size: 20px;
+		margin-top: 15px;
+		/* Отступ сверху */
+		padding-top: 10px;
+		border-top: 1px dashed var(--medium-gray);
+		/* Разделитель */
+	}
+
+	.cart-goods-item-buttons {
+		order: 3;
+		position: absolute;
+		top: 15px;
+		right: 10px;
+		/* Кнопка удаления справа вверху */
+		width: 30px;
+		height: 30px;
+	}
+
+	.cart-goods-item-buttons__remove {
+		width: 30px;
+		height: 30px;
+	}
+
+	/* Адаптивность для внутренних элементов шаблона Bitrix */
+	.basket-item-block-properties {
+		margin-top: 5px;
+	}
+
+	.basket-item-property-scu-text,
+	.basket-item-property-scu-image {
+		margin-top: 5px;
+	}
+
+	.basket-item-scu-list {
+		justify-content: flex-start;
+	}
+}
+
+/* ШАГ 3: БЛОК "ВАШ ЗАКАЗ" */
+.basket-checkout-container {
+	padding: 0;
+	border: none;
+	background-color: transparent;
+	margin-bottom: 0;
+	padding: 20px 20px 20px 0px;
+	/* Скорректирован паддинг */
+}
+
+@media (max-width: 1090px) {
+	.basket-checkout-container {
+		padding: 0 10px;
+		/* Уменьшен паддинг для мобильных */
+	}
+}
+
+.cart-order__wrap {
+	border: 1px solid var(--medium-gray);
+	border-radius: 8px;
+	/* Слегка больше закругления */
+	padding: 25px;
+	/* Увеличен паддинг */
+	background: var(--white);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+	/* Легкая тень */
+}
+
+.cart-order__accordion-button {
+	font-size: 24px;
+	font-weight: bold;
+	margin: 0 0 15px 0;
+	color: var(--secondary-color);
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.cart-order__accordion-button span {
+	position: relative;
+}
+
+.cart-order__list {
+	margin-bottom: 20px;
+	padding-bottom: 15px;
+	/* Отступ перед акциями */
+	border-bottom: 1px dashed var(--medium-gray);
+	/* Разделитель */
+}
+
+.cart-order__item {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 8px;
+	font-size: 15px;
+	/* Чуть крупнее */
+}
+
+.cart-order__item:last-child {
+	margin-bottom: 0;
+}
+
+.cart-order__item.orange span {
+	color: var(--orange);
+	font-weight: bold;
+}
+
+.cart-order-promo {
+	/* display: flex;  Убираем flex здесь, т.к. он будет на label */
+	margin-bottom: 20px;
+	/* gap: 10px; Убираем gap здесь */
+	flex-wrap: wrap;
+}
+
+.cart-order-promo__label {
+	/* flex-grow: 1; Убираем flex-grow здесь, он не нужен на label */
+	margin: 0;
+	/* min-width: 150px; Убираем min-width здесь */
+	width: 100%;
+	/* label всегда 100% ширины родителя */
+}
+
+/* Новый стиль для контейнера input + button */
+.promo-input-with-button {
+	position: relative;
+	display: flex;
+	/* Делаем flex контейнером */
+	align-items: center;
+	border: 1px solid var(--medium-gray);
+	/* Граница для всего блока */
+	border-radius: 4px;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	background-color: var(--white);
+}
+
+.promo-input-with-button:focus-within {
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.2);
+	outline: none;
+}
+
+
+.cart-order-promo__label .field-input {
+	flex-grow: 1;
+	/* Поле ввода будет занимать все доступное пространство */
+	width: 100%;
+	/* Добавлено, чтобы избежать возможных проблем с flex-grow */
+	height: 45px;
+	padding: 0 15px;
+	border: none;
+	/* Убираем границу у самого input, она теперь на promo-input-with-button */
+	border-radius: 0;
+	/* Убираем закругление */
+	font-size: 15px;
+	color: var(--secondary-color);
+	background-color: transparent;
+	/* Делаем фон прозрачным */
+	outline: none;
+	/* Убираем стандартную обводку при фокусе */
+	padding-right: 50px;
+	/* Отступ справа для кнопки */
+}
+
+/* Стили для новой кнопки-стрелки */
+.promo-input-button {
+	position: absolute;
+	/* Абсолютное позиционирование */
+	right: 0;
+	top: 0;
+	height: 100%;
+	/* Высота как у родителя */
+	width: 45px;
+	/* Ширина кнопки */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	/* Прозрачный фон */
+	border: none;
+	border-left: 1px solid var(--medium-gray);
+	/* Разделитель между инпутом и кнопкой */
+	border-top-right-radius: 4px;
+	/* Закругляем правые углы */
+	border-bottom-right-radius: 4px;
+	cursor: pointer;
+	color: var(--dark-gray);
+	/* Цвет стрелки */
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.promo-input-button:hover {
+	background-color: var(--light-gray);
+	/* Светлый фон при наведении */
+	color: var(--primary-color);
+	/* Бирюзовый цвет стрелки при наведении */
+	border-color: var(--primary-color);
+	/* Бирюзовый разделитель */
+	border: 1px solid;
+}
+
+.promo-input-button:active {
+	background-color: var(--medium-gray);
+	/* Более темный фон при нажатии */
+	color: var(--primary-color);
+}
+
+.promo-input-button svg {
+	display: block;
+}
+
+/* Удаляем старые стили для кнопки, если они не будут использоваться больше */
+/* .cart-order-promo__button {
+	height: 45px;
+	padding: 0 25px;
+	border: none;
+	background: var(--primary-color);
+	color: var(--white);
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.2s ease, box-shadow 0.2s ease;
+	flex-shrink: 0;
+}
+
+.cart-order-promo__button:hover {
+	background: #008f7d;
+	box-shadow: 0 2px 8px rgba(var(--primary-color), 0.3);
+}
+
+.cart-order-promo__button:active {
+	background: #007a6a;
+	box-shadow: none;
+} */
+
+.basket-coupon-alert {
+	padding: 8px 12px;
+	/* Увеличен паддинг */
+	font-size: 13px;
+	/* Чуть крупнее */
+	background-color: #e6ffed;
+	/* Светло-зеленый для успешных купонов */
+	border: 1px solid #a3e0b3;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #1a6d2c;
+	/* Темно-зеленый текст */
+}
+
+.basket-coupon-alert.text-danger {
+	background-color: #ffe6e6;
+	/* Светло-красный для ошибок */
+	border-color: #e0a3a3;
+	color: #6d1a1a;
+}
+
+.basket-coupon-alert strong {
+	font-weight: bold;
+}
+
+.basket-coupon-alert .close-link {
+	margin-left: 15px;
+	border-bottom: 1px dotted transparent;
+	/* Изначально не подчеркнуто */
+	cursor: pointer;
+	text-decoration: none;
+	color: inherit;
+	/* Цвет от родителя */
+	transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.basket-coupon-alert .close-link:hover {
+	border-color: inherit;
+	/* Подчеркивание при наведении */
+	color: var(--red);
+}
+
+.cart-order__sum {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 20px;
+	border-top: 1px solid var(--medium-gray);
+}
+
+.cart-order__sum .p2 {
+	font-size: 18px;
+	margin: 0;
+	color: var(--secondary-color);
+}
+
+.cart-order__sum .p2.gray.crossed {
+	font-size: 16px;
+}
+
+.cart-order__sum .h2 {
+	font-size: 28px;
+	font-weight: bold;
+	margin: 0;
+	color: var(--primary-color);
+	/* Итоговая сумма бирюзовая */
+}
+
+.cart-order__continue {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 55px;
+	/* Чуть выше */
+	margin-top: 25px;
+	background-color: var(--primary-color);
+	/* Бирюзовая кнопка */
+	color: var(--white);
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 4px;
+	transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-order__continue:hover {
+	background-color: #008f7d;
+	/* Темнее бирюзовый */
+	color: var(--white);
+	box-shadow: 0 4px 10px rgba(var(--primary-color), 0.4);
+}
+
+.cart-order__continue.disabled {
+	background-color: #ccc;
+	/* Серый для disabled */
+	pointer-events: none;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+
+.cart-order__continue svg {
+	margin-left: 10px;
+	width: 15px;
+	height: 14px;
+	fill: var(--white);
+	transition: transform 0.2s ease;
+}
+
+.cart-order__continue:hover svg {
+	transform: translateX(3px);
+	/* Легкая анимация стрелки */
+}
+
+.basket-checkout-section,
+.basket-coupon-section,
+.basket-coupon-alert-section {
+	/* Эти классы скрываются через JS, но убедимся, что они не видны */
+	display: none;
+}
+
+/* --- АДАПТИВНОСТЬ БЛОКА "ВАШ ЗАКАЗ" --- */
+@media (max-width: 767px) {
+	.cart-order__wrap {
+		padding: 20px;
+	}
+
+	.cart-order__accordion-button {
+		font-size: 22px;
+	}
+
+	.cart-order__item {
+		font-size: 14px;
+	}
+
+	.cart-order-promo {
+		flex-direction: column;
+		/* Элементы промокода в столбик */
+		gap: 15px;
+	}
+
+	.cart-order-promo__label {
+		width: 100%;
+	}
+
+	.cart-order-promo__button {
+		width: 100%;
+	}
+
+	.cart-order__sum .p2 {
+		font-size: 16px;
+	}
+
+	.cart-order__sum .h2 {
+		font-size: 24px;
+	}
+
+	.cart-order__continue {
+		height: 50px;
+		font-size: 16px;
+	}
+}
+
+
+/* ШАГ 4: ФИНАЛЬНАЯ ПОЛИРОВКА */
+.cart__return {
+	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+	color: var(--secondary-color);
+	/* Цвет текста темно-серый */
+	font-size: 14px;
+	margin-top: 20px;
+	border: 1px solid var(--medium-gray);
+	padding: 10px 20px;
+	border-radius: 4px;
+	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cart__return:hover {
+	background-color: var(--light-gray);
+	border-color: var(--primary-color);
+	/* Бирюзовый бордюр при наведении */
+	color: var(--primary-color);
+	/* Бирюзовый текст при наведении */
+}
+
+.cart__return svg {
+	margin-right: 10px;
+	width: 12px;
+	height: 13px;
+	fill: currentColor;
+	/* Цвет иконки наследуется от текста */
+	transition: fill 0.2s ease, transform 0.2s ease;
+}
+
+.cart__return:hover svg {
+	transform: translateX(-3px);
+	/* Легкая анимация стрелки */
+}
+
+/* СТИЛИ ДЛЯ ПУСТОЙ КОРЗИНЫ */
+.bx-sbb-empty-cart-image {
+	margin: 50px auto 42px;
+	width: 131px;
+	height: 116px;
+	background: url(/local/components/bitrix/sale.basket.basket/templates/custom_basket/images/empty_cart.svg) no-repeat center;
+	background-size: contain;
+}
+
+.bx-sbb-empty-cart-text {
+	margin-bottom: 42px;
+	color: #bababa;
+	text-align: center;
+	font-size: 36px;
+}
+
+.bx-sbb-empty-cart-desc {
+	margin-bottom: 42px;
+	color: #000;
+	text-align: center;
+	font-size: 16px;
+}
+
+/* --- Стили для выбора свойств товара (SKU) --- */
+
+/* Контейнер для одного свойства (например, "Масса") */
+.basket-item-property {
+	margin-top: 12px;
+	/* Отступ сверху от названия товара */
+}
+
+/* Название свойства ("Масса") */
+.basket-item-property-name {
+	font-size: 14px;
+	color: var(--dark-gray);
+	margin-bottom: 8px;
+}
+
+/* Список доступных значений (ul) */
+.basket-item-scu-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	/* Позволяет переносить опции на новую строку */
+	gap: 8px;
+	/* Расстояние между кнопками */
+}
+
+/* Каждая опция (li) - наша кнопка */
+.basket-item-scu-item {
+	cursor: pointer;
+	border: 1px solid var(--medium-gray);
+	border-radius: var(--border-radius-small);
+	transition: all 0.2s ease-in-out;
+	background-color: var(--white);
+	padding: 0;
+	/* Убираем внутренний отступ у li */
+}
+
+/* Внутренний span с текстом */
+.basket-item-scu-item-inner {
+	display: block;
+	/* Важно для корректного отображения padding */
+	padding: 6px 12px;
+	/* Внутренние отступы для текста */
+	font-size: 14px;
+	line-height: 1.2;
+	color: var(--secondary-color);
+	transition: all 0.2s ease-in-out;
+}
+
+/* --- Состояния --- */
+
+/* 1. Наведение мыши на невыбранный элемент */
+.basket-item-scu-item:not(.selected):hover {
+	border-color: var(--primary-color);
+	background-color: #f0fcfb;
+	/* Очень легкий бирюзовый фон */
+}
+
+/* 2. Активный (выбранный) элемент */
+.basket-item-scu-item.selected {
+	border-color: var(--primary-color);
+	background-color: var(--primary-color);
+	font-weight: bold;
+	box-shadow: 0 2px 5px rgba(0, 171, 154, 0.2);
+	/* Легкая тень для выделения */
+}
+
+/* Меняем цвет текста у выбранного элемента на белый */
+.basket-item-scu-item.selected .basket-item-scu-item-inner {
+	color: var(--white);
+}
+
+/* 3. Недоступное для выбора предложение */
+.basket-item-scu-item.not-available {
+	opacity: 0.6;
+	cursor: not-allowed;
+	background-color: #f5f5f5;
+	text-decoration: line-through;
+}
+
+.basket-item-scu-item.not-available:hover {
+	border-color: var(--medium-gray);
+	/* Убираем ховер-эффект */
+}
+
+
+
+.basket-item-block-properties .prop {
+	display: flex !important;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	padding-top: 10px;
+}
+
+/* End */
+
+/* --- ИСПРАВЛЕНИЕ ДЛЯ УДАЛЕННЫХ ТОВАРОВ --- */
+
+/* 1. Отменяем CSS Grid для удаленного товара, чтобы он не сжимался в первую колонку */
+.cart-goods-item.basket-items-list-item-container-expend {
+	display: block !important;
+	/* Перебиваем display: grid */
+	width: 100%;
+	border-bottom: 1px solid var(--light-gray);
+	/* Сохраняем линию разделителя */
+}
+
+/* 2. Стилизуем внутренний контейнер уведомления */
+.basket-items-list-item-notification {
+	width: 100%;
+	padding: 10px 0;
+	/* Небольшой отступ сверху и снизу */
+}
+
+/* 3. Выстраиваем текст и кнопки в одну строку */
+.basket-items-list-item-removed-container {
+	display: flex;
+	align-items: center;
+	/* Центрируем по вертикали */
+	justify-content: space-between;
+	/* Текст слева, кнопки справа */
+	width: 100%;
+	gap: 20px;
+	/* Расстояние между текстом и кнопками */
+}
+
+/* 4. Стили для текста сообщения */
+.basket-items-list-item-removed-container>div:first-child {
+	font-size: 14px;
+	color: var(--secondary-color);
+	flex-grow: 1;
+	/* Текст занимает свободное место */
+	margin: 0;
+	/* Убираем лишние отступы */
+}
+
+/* 5. Блок с кнопками справа */
+.basket-items-list-item-removed-block {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	/* Расстояние между 'Восстановить' и крестиком */
+	white-space: nowrap;
+	/* Чтобы кнопки не переносились */
+	flex-shrink: 0;
+	/* Чтобы кнопки не сжимались */
+}
+
+/* Ссылка "Восстановить" */
+.basket-items-list-item-removed-block a {
+	color: var(--primary-color);
+	text-decoration: none;
+	font-weight: 500;
+	cursor: pointer;
+	border-bottom: 1px dashed transparent;
+	transition: all 0.2s ease;
+}
+
+/* Крестик закрытия */
+.basket-items-list-item-clear-btn {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	opacity: 0.5;
+	transition: opacity 0.2s;
+}
+
+.basket-items-list-item-clear-btn:hover {
+	opacity: 1;
+}
+
+/* Рисуем аккуратный крестик через CSS */
+.basket-items-list-item-clear-btn::before,
+.basket-items-list-item-clear-btn::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 2px;
+	width: 16px;
+	height: 2px;
+	background-color: #333;
+}
+
+.basket-items-list-item-clear-btn::before {
+	transform: translateY(-50%) rotate(45deg);
+}
+
+.basket-items-list-item-clear-btn::after {
+	transform: translateY(-50%) rotate(-45deg);
+}
+
+.basket-items-list-item-overlay {
+    position: absolute; /* Ключевой момент: лоадер больше не занимает ячейку грида */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Полупрозрачный белый фон */
+    z-index: 10; /* Поверх контента */
+    border-radius: var(--border-radius-medium); /* Чтобы углы совпадали с карточкой */
+    cursor: wait; /* Курсор ожидания */
+}

@@ -1,0 +1,170 @@
+button:focus {
+    outline: none !important;
+}
+
+/* Контейнер для кнопки-триггера */
+.search-page-wrapper {
+    display: inline-block;
+    /* или flex, в зависимости от вашего layout */
+    position: relative;
+}
+
+/* Кнопка-триггер для открытия поиска */
+.search-open-btn {
+    background-color: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    line-height: 0;
+    /* Убирает лишние отступы у SVG */
+    position: relative;
+    z-index: 1;
+}
+
+.search-open-btn:hover {
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-open-btn svg {
+    color: #333;
+    /* Задает цвет обводки иконки */
+}
+
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(255, 255, 255, 0.7); */
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    /* backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); */
+
+    backdrop-filter: blur(4px);
+    background: rgba(11, 39, 61, .5);
+
+    /* --- ИЗМЕНЕНИЯ --- */
+
+    /* 1. Устанавливаем display: flex. Flexbox нужен для выравнивания. */
+    display: flex;
+
+    /* 2. align-items уже есть, он отвечает за вертикальное выравнивание. */
+    align-items: flex-start;
+
+    /* 3. Добавляем justify-content для горизонтального выравнивания. */
+    justify-content: center;
+
+    /* 4. Для плавной анимации скрываем элемент через visibility, а не display: none. */
+    /* Это позволит transition по opacity корректно отработать. */
+    visibility: hidden;
+}
+
+/* Класс, который вы добавляете через JS, чтобы показать оверлей */
+.search-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.search-overlay__container {
+    /* background-color: #fff; */
+    padding: 20px;
+    width: 100%;
+    position: relative;
+    max-width: 1450px;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+}
+
+/* Кнопка закрытия */
+.search-overlay__close-btn {
+    position: fixed;
+    top: 57px;
+    transform: translateY(-50%);
+    right: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* @media (max-width: 834px) {
+    .search-overlay__close-btn {
+        top: initial;
+    }
+} */
+
+/* Форма поиска */
+.search-overlay__form {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    margin: 12px 0px 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 50px;
+    background: #ffff;
+    border: 2px solid #00a494;
+}
+
+input.search-suggest,
+.search-overlay__input,
+.search-overlay__form .bx-search-suggest-input {
+    width: 100% !important;
+    border: none;
+    padding: 15px 20px;
+    font-size: 18px;
+    outline: none;
+    color: #333;
+    background: transparent !important;
+}
+
+.search-overlay__submit-btn {
+    background-color: transparent;
+    border: none;
+    /* padding: 0 15px; */
+    padding: 0 45px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.search-overlay__close-btn {
+    background-color: transparent;
+    border: none;
+    /* padding: 0 15px; */
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.search-overlay__submit-btn svg {
+    width: 24 !important;
+    height: 24 !important;
+}
+
+.search-overlay__submit-btn:hover {
+    color: #00a494;
+}
+
+.search-overlay__close-btn:hover {
+    color: #d9534f;
+}
+
+/* Предотвращение прокрутки страницы при открытом оверлее */
+body.search-is-active {
+    overflow: hidden;
+}
+
+/* Стили для страницы с результатами (опционально) */
+.search-page-results {
+    padding: 20px;
+}

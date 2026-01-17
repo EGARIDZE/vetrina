@@ -1,0 +1,1 @@
+<a class="text-white" href="/personal/">Персональный раздел</a>

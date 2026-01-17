@@ -1,0 +1,59 @@
+input.search-suggest {}
+
+div.search-popup {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+/* Стили для новой обертки */
+div.search-popup-wrapper {
+    border: 1px solid #CCCCCC;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #FFFFFF;
+    max-width: 1410px;
+    width: 100%;
+}
+
+div.search-popup-row,
+div.search-popup-row-active {
+    position: relative;
+    padding: 4px 20px;
+    /* Немного увеличим отступы для красоты */
+    margin: 0px;
+    cursor: pointer;
+}
+
+div.search-popup-row {
+    background: #FFFFFF;
+}
+
+/* Убираем фон у активного элемента, если обертка имеет фон */
+div.search-popup-row-active {
+    background: #EEEEEE;
+}
+
+/* Стили для последнего элемента, чтобы не было двойной границы снизу */
+div.search-popup-wrapper>div.search-popup-row:last-child {
+    border-bottom: none;
+}
+
+
+div.search-popup-el-name,
+div.search-popup-el-cnt {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+}
+
+div.search-popup-el-cnt {
+    text-align: right;
+    float: right;
+}

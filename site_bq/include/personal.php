@@ -1,0 +1,1 @@
+<a href="/site_bq/personal/">Персональный раздел</a>

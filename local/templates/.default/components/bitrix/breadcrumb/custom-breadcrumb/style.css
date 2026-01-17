@@ -1,0 +1,60 @@
+/* Основной контейнер, оставляем flex-вёрстку */
+.bx-breadcrumb {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: start;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	padding: 15px 0; /* Добавим немного воздуха */
+}
+
+/* Элемент навигационной цепочки */
+.bx-breadcrumb-item {
+	white-space: nowrap;
+}
+
+/* Новый стиль для нашего разделителя '|' */
+.bx-breadcrumb-item-separator {
+	margin: 0 15px;
+	color: #b5bdc2;
+}
+
+/* Ссылки */
+.bx-breadcrumb-item-link {
+	border-bottom: none;
+	text-decoration: none;
+}
+
+.bx-breadcrumb-item-link:hover .bx-breadcrumb-item-text {
+	text-decoration: underline;
+}
+
+/* Общий стиль для текста */
+.bx-breadcrumb-item-text {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	color: #2f343a; /* По умолчанию текст тёмный (как у "Главная" и последнего элемента) */
+}
+
+/* Делаем все промежуточные ссылки серыми, как на референсе ("Зоотовары") */
+.bx-breadcrumb-item-link .bx-breadcrumb-item-text {
+	color: #a0a0a0;
+	transition: color 0.2s ease;
+}
+
+/* А для самой первой ссылки ("Главная") возвращаем тёмный цвет */
+.bx-breadcrumb-item:first-child .bx-breadcrumb-item-link .bx-breadcrumb-item-text {
+	color: #2f343a;
+}
+
+/* При наведении на промежуточную ссылку, делаем ее тоже темной */
+.bx-breadcrumb-item-link:hover .bx-breadcrumb-item-text {
+	color: #2f343a;
+}

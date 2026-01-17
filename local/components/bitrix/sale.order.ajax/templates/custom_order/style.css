@@ -1,0 +1,1417 @@
+/* ==========================================================================
+   ОБЪЕДИНЕННАЯ И УЛУЧШЕННАЯ ВЕРСЯ СТИЛЕЙ ДЛЯ ОФОРМЛЕНИЯ ЗАКАЗА
+   ========================================================================== */
+
+/* --- Общие переменные и стили --- */
+:root {
+	--primary-color: #00AB9A;
+	--primary-color-shadow: #00ab9a3e;
+	--primary-color-hover: #00ab9aa1;
+	--primary-color_btn-hover: #008f7d;
+	/* Основной акцентный цвет (синий) */
+	--success-color: #28a745;
+	/* Цвет успеха (для завершенных шагов) */
+	--warning-color: #ffc107;
+	/* Цвет предупреждения */
+	--danger-color: #dc3545;
+	/* Цвет ошибки */
+	--border-color: #e0e2e5;
+	/* Цвет рамок */
+	--background-light: #f8f9fa;
+	/* Светлый фон для инпутов и блоков */
+	--text-color: #212529;
+	/* Основной цвет текста */
+	--text-color-secondary: #6c757d;
+	/* Вторичный цвет текста */
+	--border-radius-medium: 8px;
+	/* Радиус скругления для блоков */
+	--border-radius-small: 6px;
+	/* Радиус скругления для инпутов и кнопок */
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.show>.btn-primary.dropdown-toggle:focus {
+	border-color: var(--primary-color-hover);
+	background-color: var(--primary-color_btn-hover);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show>.btn-primary.dropdown-toggle {
+	box-shadow: 0 0 0 0.2rem var(--primary-color-shadow);
+}
+
+#bx-soa-orderSave .btn-primary,
+#bx-soa-orderSave .list-group-item.active {
+	border-color: var(--primary-color);
+	background-color: var(--primary-color);
+	color: var(--theme-b-tx-primary);
+}
+
+.bx-soa-wrapper {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	color: var(--text-color);
+	font-size: 16px;
+	/* Увеличим базовый размер для читаемости */
+}
+
+/* --- Основные секции (блоки "Покупатель", "Доставка" и т.д.) --- */
+.bx-soa-section {
+	background-color: #ffffff;
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-medium);
+	margin-bottom: 24px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bx-soa-section.bx-selected {
+	border-color: var(--border-color);
+	box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
+}
+
+/* Состояния шагов из старого файла, адаптированные под новый дизайн */
+.bx-soa-section.bx-step-completed {
+	border-color: var(--border-color);
+}
+
+.bx-soa-section.bx-step-warning {
+	border-color: var(--warning-color);
+}
+
+.bx-soa-section.bx-step-error {
+	border-color: var(--danger-color);
+}
+
+
+/* --- Заголовки секций --- */
+.bx-soa-section-title-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: transparent;
+	padding: 20px 24px;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.bx-soa-section-title {
+	font-size: 20px;
+	font-weight: 600;
+	color: var(--text-color);
+	line-height: 1.2;
+}
+
+/* Скрываем старый кружок, но оставляем для обратной совместимости */
+.bx-soa-section-title-count {
+	display: none;
+}
+
+.bx-soa-editstep {
+	/* 1. Превращаем в блочный элемент для отступов и размеров */
+	display: inline-block;
+
+	/* 2. Задаем внешний вид (стиль "outline") */
+	background-color: transparent;
+	border: 1px solid var(--primary-color) !important;
+	/* Рамка в основном цвете */
+	color: var(--primary-color);
+	/* Текст в основном цвете */
+	border-radius: var(--border-radius-small);
+	/* Используем скругление из переменных */
+	padding: 6px 14px;
+	/* Внутренние отступы для объема */
+	font-size: 14px;
+	font-weight: 500;
+
+	/* 3. Убираем стандартное поведение ссылки */
+	text-decoration: none;
+	border-bottom: none;
+	/* Убираем пунктирное подчеркивание из старых стилей */
+
+	/* 4. Добавляем плавный переход для эффектов */
+	transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* --- Эффект при наведении курсора --- */
+.bx-soa-editstep:hover {
+	background-color: var(--primary-color);
+	/* Заливка основным цветом */
+	color: #fff;
+	/* Текст становится белым */
+	text-decoration: none;
+	/* Убедимся, что подчеркивание не появляется */
+	border-bottom: none;
+	box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+	/* Небольшая тень для объема */
+}
+
+
+/* --- Контент секций --- */
+.bx-soa-section-content {
+	padding: 24px;
+}
+
+
+/* --- Поля ввода, textarea, селекторы местоположения --- */
+.form-group {
+	margin-bottom: 20px;
+}
+
+.bx-soa-customer-label,
+.bx-soa-custom-label,
+.form-group label {
+	font-weight: 500;
+	font-size: 14px;
+	margin-bottom: 8px;
+	color: #495057;
+	display: block;
+}
+
+.form-control,
+.bx_soa_location .bx-ui-sls-input-block,
+.bx-ui-slst-input-block .bx-ui-combobox-fake {
+	display: block;
+	width: 100%;
+	padding: 10px 16px;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--text-color);
+	background-color: var(--background-light);
+	background-clip: padding-box;
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-small);
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.bx_soa_location .bx-ui-sls-input-block {
+	background-color: transparent;
+}
+
+.form-control:focus,
+.bx-ui-sls-input-block:focus-within {
+	color: var(--text-color);
+	background-color: #fff;
+	border-color: var(--primary-color) !important;
+	box-shadow: 0 0 0 0.2rem var(--primary-color-shadow) !important;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+textarea.form-control {
+	min-height: 100px;
+	resize: vertical;
+}
+
+/* Стилизация селектора местоположения */
+/* .bx-sls .form-control.dropdown-block,
+.bx-slst .form-control.dropdown-block {
+	padding: 0;
+	background: transparent;
+} */
+
+/* .bx-sls .bx-ui-sls-fake, */
+.bx-slst .bx-ui-combobox-fake {
+	height: auto;
+	padding: 10px 16px;
+}
+
+
+/* --- Блоки выбора Доставки и Оплаты --- */
+.bx-soa-pp-company {
+	padding: 8px;
+}
+
+.bx-soa-pp-company-desc {
+	color: rgb(83, 92, 105);
+	font-size: 14px;
+}
+
+.bx-soa-pp-company-title-container {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: fit-content;
+
+}
+
+.bx-soa-pp-company .bx-soa-pp-company-graf-container {
+	position: relative;
+	border: 2px solid var(--border-color);
+	border-radius: var(--border-radius-medium);
+	padding: 12px;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	background-color: #fff;
+}
+
+.bx-soa-pp-company:hover .bx-soa-pp-company-graf-container {
+	border-color: var(--primary-color-shadow);
+}
+
+.bx-soa-pp-company.bx-selected .bx-soa-pp-company-graf-container {
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 0.2rem var(--primary-color-shadow);
+}
+
+.bx-soa-pp-company-checkbox {
+	position: absolute;
+	top: 12px;
+	/* left: 12px; */
+	right: 12px;
+	z-index: 1;
+}
+
+.bx-soa-pp-company-image {
+	position: relative;
+	width: 100px;
+	padding-top: 20%;
+	/* Соотношение сторон картинки 2:1 */
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: 4px;
+	margin-bottom: 8px;
+}
+
+.bx-soa-pp-company-smalltitle {
+	font-size: 15px;
+	font-weight: 500;
+	text-align: left;
+	color: var(--text-color);
+	padding: 0px 0px 0px 0px;
+	/* Отступ сверху */
+	flex-grow: 1;
+}
+
+.bx-soa-pp-delivery-cost {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--text-color);
+	background: none;
+	text-align: left;
+	/* margin-top: 8px; */
+}
+
+
+/* --- Сайдбар (Итоговая информация) --- */
+#bx-soa-total {
+	position: sticky;
+	top: 20px;
+}
+
+/* .bx-soa-cart-total {
+	background: #fff;
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-medium);
+	padding: 24px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+} */
+
+.bx-soa-cart-total-line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 0;
+	font-size: 16px;
+	border-top: 1px solid #f0f0f0;
+}
+
+.bx-soa-cart-total-line:first-child {
+	border-top: none;
+	padding-top: 0;
+}
+
+.bx-soa-cart-t {
+	color: var(--text-color-secondary);
+}
+
+.bx-soa-cart-d {
+	font-weight: 600;
+	text-align: right;
+}
+
+.bx-soa-cart-total-line-total {
+	padding-top: 20px;
+	margin-top: 10px;
+	border-top: 1px solid var(--border-color);
+}
+
+.bx-soa-cart-total-line-total .bx-soa-cart-t {
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--text-color);
+}
+
+.bx-soa-cart-total-line-total .bx-soa-cart-d {
+	font-size: 24px;
+	font-weight: 700;
+	color: var(--primary-color);
+}
+
+/* --- Кнопка оформления --- */
+.btn-order-save,
+.bx-soa-cart-total-button-container>.btn {
+	display: block;
+	width: 100%;
+	background-color: var(--primary-color);
+	border: none;
+	border-radius: var(--border-radius-small);
+	padding: 14px 24px;
+	font-size: 16px;
+	font-weight: 600;
+	text-align: center;
+	color: #fff;
+	transition: background-color 0.2s ease, box-shadow 0.2s ease;
+	cursor: pointer;
+}
+
+.btn-order-save:hover,
+#bx-soa-orderSave .btn-primary:hover,
+.bx-soa-pickup-list-item.bx-selected .bx-soa-pickup-l-item-btn .btn:hover,
+.bx-soa-cart-total-button-container>.btn:hover {
+	background-color: var(--primary-color_btn-hover);
+	color: #fff;
+}
+
+
+
+/* --- Корзина в сайдбаре --- */
+.bx-soa-sidebar-basket {
+	margin-top: 24px;
+}
+
+.bx-soa-sidebar-basket-title {
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 16px;
+}
+
+.bx-soa-sidebar-basket-item {
+	display: flex;
+	align-items: flex-start;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.bx-soa-sidebar-basket-item:last-child {
+	border-bottom: none;
+}
+
+.bx-soa-sidebar-basket-item-image {
+	flex-shrink: 0;
+	width: 64px;
+	height: 64px;
+	margin-right: 16px;
+}
+
+.bx-soa-sidebar-basket-item-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border-radius: var(--border-radius-small);
+	border: 1px solid var(--border-color);
+}
+
+.bx-soa-sidebar-basket-item-details {
+	flex-grow: 1;
+	font-size: 12px;
+}
+
+.bx-soa-sidebar-basket-item-name {
+	font-weight: 500;
+	margin-bottom: 4px;
+}
+
+.bx-soa-sidebar-basket-item-name a {
+	color: var(--text-color);
+	text-decoration: none;
+}
+
+.bx-soa-sidebar-basket-item-name a:hover {
+	color: var(--primary-color);
+}
+
+
+.bx-soa-sidebar-basket-item-summary {
+	font-size: 14px;
+	color: var(--text-color-secondary);
+}
+
+.bx-price-old {
+	color: var(--text-color-secondary);
+	text-decoration: line-through;
+	margin-left: 8px;
+}
+
+
+.bx-soa-sidebar-basket-item-total {
+	flex-shrink: 0;
+	font-weight: 600;
+	margin-left: 16px;
+	text-align: right;
+}
+
+/* --- Купоны --- */
+.bx-soa-coupon {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid var(--border-color);
+}
+
+.bx-soa-coupon-label {
+	font-weight: 500;
+	margin-bottom: 8px;
+	display: block;
+}
+
+.bx-soa-coupon-block {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.bx-soa-coupon-input {
+	flex-grow: 1;
+}
+
+/* .bx-soa-coupon-input input[type=text].form-control {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+} */
+
+/* .bx-soa-coupon-button .btn {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	height: 100%;
+	padding: 10px 20px;
+} */
+
+/* Стили для примененных купонов */
+.bx-soa-coupon-list {
+	margin-top: 15px;
+}
+
+.bx-soa-coupon-item {
+	width: 100%;
+}
+
+.bx-soa-coupon-item strong {
+	display: inline-flex;
+	align-items: center;
+	background-color: var(--background-light);
+	border: 1px solid var(--border-color);
+	padding: 4px 10px;
+	border-radius: var(--border-radius-small);
+	font-size: 14px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.bx-soa-coupon-item strong.bx-soa-coupon-item-success {
+	background-color: #d4edda;
+	border-color: #c3e6cb;
+	color: #155724;
+}
+
+.bx-soa-coupon-item strong.bx-soa-coupon-item-danger {
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+	color: #721c24;
+}
+
+.bx-soa-coupon-remove {
+	width: 16px;
+	height: 16px;
+	margin-left: 10px;
+	opacity: 0.6;
+	cursor: pointer;
+	transition: opacity 0.2s;
+	background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iY3VycmVudENvbG9yIiBjbGFzcz0iYmkgYmkteC1jaXJjbGUiIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZD0iTTggMTVBNyA3IDAgMSAxIDggMWE3IDcgMCAwIDEgMCAxNHptMCAxQTggOCAwIDEgMCA4IDBhOCA4IDAgMCAwIDAgMTZ6Ii8+PHBhdGggZD0iTTQuNjQ2IDQuNjQ2YS41LjUgMCAwIDEgLjcwOCAwbDMuNSwzLjUgMy41LTMuNWEuNS41IDAgMCAxIC43MDguNzA4TDUuMzU0IDggOC44NTQgMTEuMzU0YS41LjUgMCAwIDEtLjcwOC43MDhMMCA4LjcwNyA0LjY0NiA1M5NGEuNS41IDAgMCAxIDAtLjcwOHoiLz48L3N2Zz4=) no-repeat center;
+}
+
+.bx-soa-coupon-remove:hover {
+	opacity: 1;
+}
+
+/* --- Стили для выбора торговых предложений (SKU) --- */
+.bx-scu-container {
+	margin-top: 10px;
+}
+
+.bx-scu-block .bx-soa-item-td-title {
+	font-size: 14px;
+	color: var(--text-color-secondary);
+	margin-bottom: 5px;
+}
+
+.bx-scu-itemlist {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.bx-scu-itemTextBlock {
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-small);
+	padding: 6px 12px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-size: 14px;
+}
+
+.bx-scu-itemTextBlock:hover {
+	border-color: var(--primary-color);
+	color: var(--primary-color);
+}
+
+.bx-scu-itemTextBlock.selected {
+	border-color: var(--primary-color);
+	background-color: var(--primary-color);
+	color: #fff;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.bx-scu-itemColorBlock {
+	width: 32px;
+	height: 32px;
+	border: 1px solid var(--border-color);
+	border-radius: 50%;
+	cursor: pointer;
+	position: relative;
+	transition: all 0.2s ease;
+}
+
+.bx-scu-itemColorBlock.selected {
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.bx-scu-itemColor {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	bottom: 2px;
+	left: 2px;
+	border-radius: 50%;
+	background-size: cover;
+}
+
+/* --- Стили для пунктов самовывоза --- */
+#pickUpMap {
+	width: 100%;
+	height: 400px;
+	border-radius: var(--border-radius-medium);
+	/* margin-bottom: 20px; */
+}
+
+.bx-soa-pickup-list-item.bx-selected {
+	/* border-color: var(--primary-color); */
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+	box-shadow: none;
+}
+
+.bx-soa-pickup-l-item-adress {
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.bx-soa-pickup-l-item-detail {
+	font-size: 14px;
+	color: var(--text-color-secondary);
+}
+
+.bx-soa-pickup-l-item-btn {
+	margin-top: 12px;
+}
+
+/* --- Системные сообщения --- */
+.alert {
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid transparent;
+	border-radius: var(--border-radius-small);
+}
+
+.alert-danger,
+.bx-soa-error-alert {
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+}
+
+.alert-success {
+	color: #155724;
+	background-color: #d4edda;
+	border-color: #c3e6cb;
+}
+
+.alert-warning {
+	color: #856404;
+	background-color: #fff3cd;
+	border-color: #ffeeba;
+}
+
+/* --- Responsive adjustments --- */
+@media (max-width: 991px) {
+	#bx-soa-total {
+		position: static;
+		top: auto;
+		margin-top: 24px;
+	}
+
+	.bx-soa-cart-total.bx-soa-cart-total-fixed {
+		position: static;
+		width: 100% !important;
+	}
+}
+
+@media (max-width: 580px) {
+	.bx-soa-section-title {
+		font-size: 18px;
+	}
+
+	.bx-soa-section-content,
+	.bx-soa-section-title-container {
+		padding: 16px;
+	}
+
+	.bx-soa-cart-total {
+		padding: 0px;
+	}
+
+	.bx-soa-sidebar-basket-item {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.bx-soa-sidebar-basket-item-image {
+		/* margin-right: 0;
+		margin-bottom: 12px; */
+		display: none;
+	}
+
+	.bx-soa-sidebar-basket-item-total {
+		margin-left: 0;
+		margin-top: 8px;
+		/* width: 100%; */
+		text-align: left;
+	}
+}
+
+
+
+/* ==========================================================================
+   ДОПОЛНЕНИЯ ДЛЯ БЛОКА САМОВЫВОЗА
+   ========================================================================== */
+
+/* Контейнер списка ПВЗ */
+.soa-pickup-list-col {
+	max-height: 400px;
+	/* Ограничиваем высоту, чтобы появилась прокрутка */
+	overflow-y: auto;
+	padding: 0px 0px 0px 0px;
+}
+
+.bx_soa_pickup_map {
+	padding: 0px 0px 0px 0px;
+}
+
+/* Стилизация полосы прокрутки (для Webkit-браузеров) */
+.soa-pickup-list-col::-webkit-scrollbar {
+	width: 6px;
+}
+
+.soa-pickup-list-col::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 3px;
+}
+
+.soa-pickup-list-col::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 3px;
+}
+
+.soa-pickup-list-col::-webkit-scrollbar-thumb:hover {
+	background: #aaa;
+}
+
+.bx_soa_pickup {
+	margin: 30px 0px 0px 0px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-medium);
+	overflow: hidden;
+	max-height: 400px;
+}
+
+/* Карточка пункта самовывоза */
+.bx-soa-pickup-list .bx-soa-pickup-list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px;
+	border-bottom: 1px solid var(--border-color);
+	margin-bottom: 12px;
+	cursor: pointer;
+	transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+/* Ховер-эффект */
+.bx-soa-pickup-list-item:hover {
+	/* border-color: #a2cfff; */
+	background-color: #f8f9fa;
+}
+
+
+/* Блок с информацией (адрес, телефон и т.д.) */
+.bx-soa-pickup-l-item-detail {
+	flex-grow: 1;
+	padding-right: 15px;
+	/* Отступ до кнопки */
+}
+
+/* Убираем лишние классы из старой верстки */
+.bx-soa-pickup-l-item-adress {
+	margin-bottom: 0;
+}
+
+/* Новый стиль для адреса */
+.soa-pickup-address {
+	font-weight: 600;
+	color: var(--text-color);
+	margin-bottom: 8px;
+}
+
+/* Новый стиль для доп. информации */
+.soa-pickup-info {
+	font-size: 14px;
+	color: var(--text-color-secondary);
+	line-height: 1.5;
+}
+
+.soa-pickup-info strong {
+	font-weight: 500;
+	color: #495057;
+}
+
+
+/* Блок с кнопкой */
+.bx-soa-pickup-l-item-btn {
+	margin-top: 0;
+	flex-shrink: 0;
+}
+
+/* Стилизация кнопки */
+.bx-soa-pickup-l-item-btn .btn {
+	background-color: var(--background-light);
+	border: 1px solid var(--border-color);
+	color: var(--primary-color);
+	font-weight: 500;
+	transition: all 0.2s;
+}
+
+.bx-soa-pickup-container {
+	margin-top: 40px;
+}
+
+/* Кнопка при наведении на карточку */
+.bx-soa-pickup-list-item:hover .bx-soa-pickup-l-item-btn .btn {
+	background-color: #e2e6ea;
+	border-color: #dae0e5;
+}
+
+/* Кнопка у выбранного пункта */
+.bx-soa-pickup-list-item.bx-selected .bx-soa-pickup-l-item-btn .btn {
+	background-color: var(--primary-color);
+	border-color: var(--primary-color);
+	color: #fff;
+}
+
+/* Убираем изображение */
+.bx-soa-pickup-l-item-img {
+	display: none;
+}
+
+
+/* Стили для подсказок (hint/tooltip) */
+.hint {
+	position: relative;
+	cursor: pointer;
+	display: inline-flex;
+	/* Используем flex для выравнивания */
+	align-items: center;
+	margin-left: 5px;
+	/* Небольшой отступ от заголовка */
+}
+
+.hint__icon {
+	display: inline-block;
+	cursor: pointer;
+	text-align: center;
+	padding: 0;
+	height: 16px;
+	width: 16px;
+	line-height: 14px;
+	/* Скорректировано для лучшего вида */
+	border: 1px solid #e5e5e5;
+	font-size: 11px;
+	border-radius: 50%;
+	/* Сделаем иконку круглой */
+}
+
+.hint__icon i {
+	font-style: normal;
+	font-weight: bold;
+}
+
+.hint .tooltip {
+	position: absolute;
+	left: 50%;
+	/* Центрируем относительно иконки */
+	transform: translateX(-50%);
+	/* Точная центровка */
+	bottom: 120%;
+	/* Позиция над иконкой */
+	line-height: 1.4;
+	z-index: 202;
+	padding: 13px 16px;
+	min-width: 220px;
+	max-width: 300px;
+	font-size: 12px;
+	border-radius: 8px;
+	font-weight: 400;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+	background: #fff;
+	color: #333;
+	text-align: left;
+	/* Текст в подсказке по левому краю */
+
+	/* Начальное состояние - скрыто */
+	display: block;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Показываем tooltip при наведении на hint */
+.hint:hover .tooltip {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Делаем родительский контейнер поля точкой отсчета для позиционирования */
+.form-group.bx-soa-customer-field,
+.form-group.bx-soa-location-input-container {
+	position: relative;
+}
+
+/* Стили для тултипа, который должен быть СЛЕВА от поля */
+.bx-soa-tooltip-static.right {
+	top: 50%;
+	/* Вертикально по центру */
+	left: auto;
+	/* Сбрасываем позицию слева */
+	right: 100%;
+	/* Прижимаем правый край тултипа к левому краю родителя */
+	margin-top: 0;
+	/* Убираем лишние отступы */
+	margin-right: 10px;
+	/* Добавляем отступ справа от тултипа */
+	transform: translateY(-50%);
+	/* Точное вертикальное центрирование */
+}
+
+/* Стили для стрелки тултипа, чтобы она указывала вправо */
+.bx-soa-tooltip-static.right .tooltip-arrow {
+	top: 50%;
+	left: 100%;
+	/* Позиционируем стрелку справа от тела тултипа */
+	margin-top: -5px;
+	/* Вертикальное центрирование стрелки */
+	border-width: 5px 0 5px 5px;
+	/* Создаем треугольник, смотрящий вправо */
+	border-left-color: #d9534f;
+	/* Цвет стрелки (красный для ошибок) */
+	border-right-color: transparent;
+	/* Правая сторона прозрачная */
+}
+
+.tooltip-inner {
+	max-width: 200px;
+	padding: .25rem .5rem;
+	color: #721c24;
+	text-align: center;
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+	border-radius: .25rem;
+}
+
+
+/* Делаем поле местоположения похожим на стандартный input */
+.bx-sls .form-control.dropdown-block {
+	padding: 0;
+	/* Убираем паддинги у внешнего контейнера */
+	border: none;
+	/* Убираем рамку у внешнего контейнера, т.к. она будет на внутреннем */
+	box-shadow: none !important;
+	/* Убираем тени */
+	background: none;
+	/* Убираем фон */
+	display: flex;
+	/* Выравниваем элементы внутри */
+	align-items: center;
+}
+
+/* Стилизуем внутренний псевдо-инпут, чтобы он выглядел как form-control */
+.bx-sls .bx-ui-sls-container {
+	border: 1px solid #ced4da;
+	/* Стандартная рамка Bootstrap */
+	border-radius: .25rem;
+	/* Стандартное скругление Bootstrap */
+	padding: .375rem .75rem;
+	/* Стандартные паддинги Bootstrap */
+	width: 100%;
+	background-color: #fff;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* Убираем рамку при фокусе, чтобы она рисовалась на общем контейнере */
+.bx-sls .bx-ui-sls-fake:focus {
+	box-shadow: none !important;
+}
+
+.bx-sls .bx-ui-sls-route {
+	height: 25px;
+	background: unset !important;
+}
+
+/* Выравниваем текст внутри */
+.bx-sls .bx-ui-sls-fake {
+	line-height: 1.5;
+	padding: 0;
+	border: none;
+	height: 25px;
+	background: unset !important;
+}
+
+/* Позиционирование иконки очистки */
+.bx-sls .bx-ui-sls-clear {
+	right: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-top: 0px;
+	z-index: 100;
+}
+
+/* Убираем иконку-стрелку, она не нужна для такого дизайна */
+.bx-sls .dropdown-icon {
+	display: none;
+}
+
+/* --- Стили для нового блока отображения города --- */
+.bx-soa-location-display {
+	margin-bottom: 20px;
+	/* Отступ снизу, как у обычного поля */
+	transition: opacity 0.3s ease-in-out;
+	/* Плавный переход для скрытия */
+}
+
+.bx-soa-location-display .bx-soa-section-title {
+	font-size: 16px;
+	/* Можно сделать шрифт поменьше, чтобы не был как заголовок секции */
+	font-weight: 400;
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	/* Для переноса на мобильных */
+}
+
+.city_destination {
+	color: var(--text-color-secondary);
+	margin-left: 5px;
+}
+
+.destination_value {
+	color: var(--text-color);
+	font-weight: 500;
+}
+
+.change_city {
+	color: var(--primary-color);
+	font-size: 14px;
+	margin-left: 15px;
+	border-bottom: 1px dashed var(--primary-color);
+	cursor: pointer;
+	transition: color 0.2s, border-color 0.2s;
+}
+
+.change_city:hover {
+	color: #0056b3;
+	border-bottom-color: #0056b3;
+}
+
+/* --- Стили для контейнера с полем ввода --- */
+#soa-location-input-container {
+	transition: opacity 0.3s ease-in-out;
+	/* Плавный переход для появления */
+}
+
+/* Убираем лишний отступ у первого элемента в скрытом блоке, т.к. он уже есть у родителя */
+#soa-location-input-container .form-group:first-child {
+	margin-top: 0;
+}
+
+
+/* ==========================================================================
+   РЕФАКТОРИНГ САЙДБАРА НА СТРАНИЦЕ ОФОРМЛЕНИЯ ЗАКАЗА
+   ========================================================================== */
+
+/* --- 1. ПЛАВНАЯ ПРОКРУТКА И АДАПТИВНОСТЬ САЙДБАРА --- */
+
+/* Контейнер всего сайдбара */
+.bx-soa-sidebar {
+	/* Стили по умолчанию */
+}
+
+/* Стили для "прилипания" сайдбара */
+.bx-soa-cart-total.bx-soa-cart-total-fixed {
+	position: fixed;
+	/* Меняем на fixed для более предсказуемого поведения */
+	top: 20px;
+	z-index: 900;
+	/* Убедимся, что сайдбар не перекрывает другие важные элементы */
+}
+
+/* Стили для сайдбара, когда он "доехал" до конца основного блока */
+.bx-soa-cart-total.bx-soa-cart-total-bottom {
+	position: absolute;
+	top: auto;
+	bottom: 0;
+}
+
+/* Адаптация для планшетов и мобильных */
+@media (max-width: 991px) {
+	.bx-soa-sidebar {
+		/* Убираем отступы на мобильных, если они есть */
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	/* Отключаем "прилипание" на экранах меньше 992px */
+	.bx-soa-cart-total.bx-soa-cart-total-fixed {
+		position: static;
+		width: 100% !important;
+		/* Важно для сброса инлайн-стилей от JS */
+	}
+
+	.bx-soa-cart-total-ghost {
+		display: none;
+		/* Скрываем "призрак", он не нужен на мобильных */
+	}
+}
+
+/* Общие стили для обертки сайдбара */
+.bx-soa-cart-total-main {
+	border: 1px solid var(--medium-gray);
+	border-radius: 8px;
+	padding: 25px;
+	background: var(--white);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+/* --- 2. СТИЛИЗАЦИЯ ПОЛЯ ПРОМОКОДА (С КНОПКОЙ-СТРЕЛКОЙ) --- */
+
+.bx-soa-coupon {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px dashed var(--medium-gray);
+}
+
+.bx-soa-coupon-label {
+	margin-bottom: 10px;
+	font-size: 16px;
+	font-weight: 500;
+}
+
+/* Обертка для поля ввода */
+.bx-soa-coupon-input {
+	position: relative;
+	border: 1px solid var(--medium-gray);
+	border-radius: 4px;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	background-color: var(--white);
+	margin-bottom: 15px;
+}
+
+.bx-soa-coupon-input:focus-within {
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 3px rgba(0, 171, 154, 0.2);
+	outline: none;
+}
+
+/* Сам input */
+.bx-soa-coupon-input input.form-control {
+	width: 100%;
+	height: 45px;
+	/* border: none; */
+	background-color: transparent;
+	padding: 0 45px 0 15px;
+	/* Оставляем место справа для кнопки */
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+/* Создаем псевдо-кнопку со стрелкой */
+.bx-soa-coupon-input::after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 45px;
+	border-left: 1px solid var(--medium-gray);
+	background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12H19' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M12 5L19 12L12 19' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 18px 18px;
+	cursor: pointer;
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.bx-soa-coupon-input:hover::after {
+	background-color: var(--light-gray);
+}
+
+
+/* --- 3. ИСПРАВЛЕНИЕ УДАЛЕНИЯ ПРОМОКОДА --- */
+
+/* Стилизуем блок с примененным купоном */
+.bx-soa-coupon-item strong {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 12px;
+	font-size: 13px;
+	border: 1px solid;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	font-weight: normal;
+	width: 100%;
+}
+
+.bx-soa-coupon-text {
+	flex-grow: 1;
+	/* Занимает все доступное место */
+	padding-right: 10px;
+	/* Отступ до крестика */
+	word-break: break-all;
+	/* Ключевое свойство: ломает длинное слово */
+	font-weight: bold;
+	/* Возвращаем жирность тексту купона */
+}
+
+/* Успешный купон */
+.bx-soa-coupon-item-success {
+	background-color: #e6ffed;
+	border-color: #a3e0b3;
+	color: #1a6d2c;
+}
+
+/* Ненайденный купон (ошибка) */
+.bx-soa-coupon-item-danger {
+	background-color: #ffe6e6;
+	border-color: #e0a3a3;
+	color: #6d1a1a;
+}
+
+/* Прячем старый тултип от Bitrix, он нам больше не нужен */
+.bx-soa-tooltip-coupon {
+	display: none !important;
+}
+
+/* Делаем кнопку удаления видимой и кликабельной */
+.bx-soa-coupon-remove {
+	width: 16px;
+	height: 16px;
+	margin-left: 15px;
+	background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 4L4 12' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4 4L12 12' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: pointer;
+	opacity: 0.7;
+	transition: opacity 0.2s ease;
+	flex-shrink: 0;
+}
+
+.bx-soa-coupon-remove:hover {
+	opacity: 1;
+}
+
+/* Меняем цвет крестика на красный при ошибке */
+.bx-soa-coupon-item-danger .bx-soa-coupon-remove {
+	background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 4L4 12' stroke='%23d0021b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4 4L12 12' stroke='%23d0021b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Задаем акцентный цвет для чекбоксов выбора */
+.bx-soa-pp-company-checkbox {
+	accent-color: #00a494;
+}
+
+
+/* ==========================================================================
+   НОВЫЕ МИНИМАЛИСТИЧНЫЕ ПОДСКАЗКИ ОБ ОШИБКАХ
+   ========================================================================== */
+
+/* Контейнер для сообщения об ошибке под полем */
+.soa-field-error-message {
+	/* Стили текста */
+	color: var(--danger-color, #dc3545);
+	/* Используем переменную, если она есть */
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+
+	/* Отступы */
+	margin-top: 6px;
+	padding: 0 2px;
+	/* Небольшой отступ, чтобы текст не прилипал к краям */
+
+	/* Анимация появления/исчезновения */
+	overflow: hidden;
+	max-height: 0;
+	opacity: 0;
+	transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin-top 0.3s ease-out;
+}
+
+/* Активное состояние, когда ошибка есть */
+.soa-field-error-message.active {
+	max-height: 50px;
+	/* Достаточная высота для 2-3 строк текста */
+	opacity: 1;
+}
+
+/* Добавляем красный контур для самого поля при ошибке */
+.form-group.has-error .bx-ui-sls-input-block,
+.form-group.has-error .form-control {
+	border-color: var(--danger-color, #dc3545) !important;
+	box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+
+/* ==========================================================================
+   Responsive Adjustments (Адаптивность)
+   ========================================================================== */
+
+/* --- Планшеты и телефоны (меньше 992px) --- */
+@media (max-width: 991.98px) {
+	.bx-soa-sidebar {
+		margin-top: 30px;
+		/* Добавляем отступ сверху, когда сайдбар уходит вниз */
+		order: 2;
+		/* Меняем порядок, чтобы сайдбар был после основного контента */
+	}
+
+	.bx-soa {
+		order: 1;
+	}
+
+	.bx-soa-cart-total {
+		position: static !important;
+		width: 100% !important;
+		top: auto !important;
+	}
+
+	.bx-soa-cart-total-ghost {
+		display: none;
+	}
+
+	.bx_soa_pickup {
+		flex-direction: column;
+		max-height: none;
+		/* Снимаем ограничение по высоте */
+	}
+
+	.soa-pickup-list-col,
+	.bx_soa_pickup_map {
+		width: 100%;
+		max-width: 100%;
+		flex: 0 0 100%;
+	}
+
+	.soa-pickup-list-col {
+		max-height: 400px;
+		/* Возвращаем ограничение по высоте для списка на мобильных */
+		border-right: none;
+	}
+
+	.bx_soa_pickup_map {
+		margin-top: 20px;
+		height: 300px;
+		/* Уменьшаем высоту карты на мобильных */
+	}
+}
+
+/* --- Телефоны в портретной ориентации (меньше 768px) --- */
+@media (max-width: 767.98px) {
+	.bx-soa-sidebar-basket-item {
+		align-items: center;
+	}
+
+	.bx-soa-sidebar-basket-item-details {
+		font-size: 14px;
+	}
+}
+
+/* --- Маленькие телефоны (меньше 576px) --- */
+@media (max-width: 575.98px) {
+
+	.bx-soa-section-title-container,
+	.bx-soa-section-content {
+		padding: 15px;
+	}
+
+	.bx-soa-pp-company {
+		width: 100%;
+		/* Делаем выбор доставки/оплаты на всю ширину */
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+
+	.bx-soa-sidebar-basket-item {
+		flex-direction: row;
+		/* Возвращаем в строку для лучшего вида */
+		align-items: flex-start;
+	}
+
+	.bx-soa-sidebar-basket-item-name {
+		margin-right: 10px;
+	}
+
+	.bx-soa-sidebar-basket-item-total {
+		margin-top: 0;
+		text-align: right;
+	}
+
+	.bx-soa-cart-total-line-total .bx-soa-cart-d {
+		font-size: 20px;
+	}
+
+	.bx-soa-cart-total-line-total .bx-soa-cart-t {
+		font-size: 16px;
+	}
+
+	#bx-soa-delivery-props-container .col-sm-6 {
+		width: 100%;
+		/* Поля адреса доставки в одну колонку */
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+}

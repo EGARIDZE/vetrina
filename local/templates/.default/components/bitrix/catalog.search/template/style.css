@@ -1,0 +1,91 @@
+/* ==========================================================================
+   СТИЛИ ДЛЯ КРАСИВОГО ПОИСКА С SVG-ИКНОКОЙ
+   ========================================================================== */
+
+/* 1. Главный контейнер для поля ввода и кнопки */
+.search-form-container {
+	display: flex;
+	position: relative;
+	width: 50%;
+	/* max-width: 700px; */
+	/* margin: 0 auto; */
+	justify-content: flex-start;
+}
+
+/* 2. Поле для ввода текста */
+.search-input {
+	width: 100%;
+	/* Занимает всю ширину контейнера */
+	border: 2px solid #e2dfdf;
+	/* Рамка */
+	border-radius: 6px;
+	/* Сильно скругленные углы для "овальной" формы */
+	padding: 12px 60px 12px 25px;
+	/* Отступы: справа больше, чтобы текст не заходил под кнопку */
+	font-size: 16px;
+	color: #333;
+	outline: none;
+	/* Убираем обводку при фокусе */
+	-webkit-appearance: none;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Эффект при фокусе на поле ввода */
+.search-input:focus {
+	border-color: var(--primary-color, #00AB9A);
+	box-shadow: 0 0 8px rgba(0, 171, 154, 0.3);
+}
+
+.search-input::placeholder {
+	color: #a0a0a0;
+}
+
+/* 3. Кнопка "Искать" с SVG */
+.search-button {
+	position: absolute;
+	/* Позиционируем кнопку поверх поля ввода */
+	right: 5px;
+	/* Отступ справа */
+	top: 50%;
+	/* Вертикальное центрирование (шаг 1) */
+	transform: translateY(-50%);
+	/* Вертикальное центрирование (шаг 2) */
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 44px;
+	/* Ширина кнопки */
+	height: 44px;
+	/* Высота кнопки */
+
+	border: none;
+	background-color: #ffffff00;
+	/* color: white; */
+	/* Цвет иконки SVG (currentColor) будет белым */
+	border-radius: 50%;
+	/* Делаем кнопку идеально круглой */
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-button:hover {
+	/* background-color: var(--primary-color_btn-hover, #008f7d); */
+	color: var(--primary-color_btn-hover, #008f7d);
+	/* transform: translateY(-50%) scale(1.05); */
+	/* Легкое увеличение при наведении */
+}
+
+/* 4. Стили для самой SVG-иконки внутри кнопки */
+.search-button svg {
+	width: 26px;
+	height: 26px;
+}
+
+
+@media (max-width: 576px) {
+	.search-form-container {
+		width: 100%;
+	}
+}

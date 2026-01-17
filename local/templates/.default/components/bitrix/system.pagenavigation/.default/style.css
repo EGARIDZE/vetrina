@@ -1,0 +1,112 @@
+/* ==========================================================================
+   СОВРЕМЕННАЯ И КРАСИВАЯ ПАГИНАЦИЯ
+   ========================================================================== */
+
+/* 1. Главный контейнер */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    /* Центрируем пагинацию */
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.modern-pagination {
+    display: inline-block;
+}
+
+/* 2. Список страниц */
+.pagination-list {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    /* Убираем маркеры списка */
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+    /* Расстояние между кнопками */
+}
+
+.pagination-item {}
+
+/* 3. Общий стиль для всех кнопок-ссылок */
+.pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+
+    width: 42px;
+    /* Фиксированная ширина */
+    height: 42px;
+    /* Фиксированная высота */
+
+    color: #333;
+    background-color: #ffffff;
+    border: 1px solid #e2dfdf;
+    border-radius: 8px;
+    /* Скругление углов */
+
+    transition: all 0.2s ease-in-out;
+}
+
+/* 4. Активная страница (текущая) */
+.pagination-link.is-active {
+    background-color: var(--primary-color, #00AB9A);
+    border-color: var(--primary-color, #00AB9A);
+    color: #fff;
+    cursor: default;
+    /* box-shadow: 0 4px 10px rgba(0, 171, 154, 0.3); */
+}
+
+/* 5. Неактивные/отключенные элементы (стрелки на крайних страницах) */
+.pagination-link.is-disabled {
+    color: #c0c0c0;
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* 6. Эффект при наведении на обычную кнопку */
+.pagination-link:not(.is-active):not(.is-disabled):not(.is-dots):hover {
+    border-color: var(--primary-color, #00AB9A);
+    color: var(--primary-color, #00AB9A);
+    transform: translateY(-2px);
+    /* Легкий эффект "подъема" */
+}
+
+/* 7. Стилизация стрелок */
+.pagination-item--arrow .pagination-link {
+    padding: 0;
+    /* Убираем внутренние отступы, т.к. иконка центрируется сама */
+}
+
+.pagination-item--arrow .pagination-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* 8. Стилизация многоточия "..." */
+.pagination-link.is-dots {
+    border: none;
+    background: none;
+    cursor: default;
+    color: #a0a0a0;
+}
+
+/* --- Адаптивность для мобильных устройств --- */
+@media (max-width: 576px) {
+    .pagination-list {
+        gap: 5px;
+        /* Уменьшаем расстояние между кнопками */
+    }
+
+    .pagination-link {
+        width: 38px;
+        /* Делаем кнопки чуть меньше */
+        height: 38px;
+        font-size: 14px;
+    }
+}

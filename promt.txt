@@ -1,0 +1,343 @@
+Ты в роли разработчика 1С Битрикс. Владеешь такими технологиями, как bootstrap, js, css, html, ajax, php, фреймворк 1С Битрикс
+Сейчас ты работаешь с компонентом главного меню bitrix:menu
+На данный момент шаблон компонента нужно доработать. За основу был взят шаблон bootstrap_v4
+Сейчас шаблон содержит в себе верстку и CSS, наша задача, не ломая уже имеющуюся структуру шаблона, исправить баги, имеющиеся в в выпадающем меню: при наведении на корневой пункт меню у нас сейчас выпадают его подразделы, но данная область некорректно отображается. Нужно сделать так, чтобы выпадающее меню было не просто списком подкатегорий, а имела ширину на весь экран, в одном столбце 7 строк подкатегорий должно быть максимум
+Аналог нужной структуры выпадающего списка представлен во вложении на первом скриншоте, на втором скриншоте список, который имеется сейчас у нас и его нужно доработать. Менять стили (цвета, шрифт и тп) не требуется, мы работаем сейчас только с областью dropdown-menu, его отображением на всю ширину меню. Не забывай, что все должно быть маштабируемым, иметь корректное отображение, учитывать другие девайсы, помимо десктопа.
+Исходники нашей верстки меню:
+template.php:
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100 rounded-pill" id="<?=$menuBlockId?>">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu<?=$menuBlockId?>" aria-controls="mainMenu<?=$menuBlockId?>" aria-expanded="false" aria-label="Переключить навигацию">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="mainMenu<?=$menuBlockId?>">
+    <ul class="navbar-nav d-flex flex-row justify-content-between w-100 mb-0">
+      <?foreach($arResult["MENU_STRUCTURE"] as $itemID => $arColumns):?>
+        <?php $hasDropdown = is_array($arColumns) && !empty($arColumns); ?>
+        <li class="nav-item<?= $hasDropdown ? ' dropdown' : '' ?> flex-fill text-center<?=($arResult["ALL_ITEMS"][$itemID]["SELECTED"] ? ' active' : '')?>">
+          <a class="nav-link<?= $hasDropdown ? ' dropdown-toggle' : '' ?> py-3"
+             href="<?=$arResult["ALL_ITEMS"][$itemID]["LINK"]?>"
+             <?= $hasDropdown ? 'data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"' : '' ?>>
+            <?=htmlspecialcharsbx($arResult["ALL_ITEMS"][$itemID]["TEXT"], ENT_COMPAT, false)?>
+          </a>
+          <?if ($hasDropdown):?>
+            <div class="dropdown-menu w-100 rounded-bottom">
+              <?foreach($arColumns as $key=>$arRow):?>
+                <?foreach($arRow as $itemIdLevel_2=>$arLevel_3):?>
+                  <a class="dropdown-item px-3 py-2" 
+                     href="<?=$arResult["ALL_ITEMS"][$itemIdLevel_2]["LINK"]?>">
+                    <?=$arResult["ALL_ITEMS"][$itemIdLevel_2]["TEXT"]?>
+                  </a>
+                <?endforeach;?>
+              <?endforeach;?>
+            </div>
+          <?endif?>
+        </li>
+      <?endforeach;?>
+    </ul>
+  </div>
+</nav>
+style.css:
+.rounded-pill {
+border-radius: 0.5rem !important;
+}
+.navbar-dark .navbar-nav .nav-link {
+color: white;
+}
+/* Темный фон и светлый текст для dropdown /
+.navbar-nav .dropdown-menu {
+background-color: #393c45 !important; / Темно-серый фон, как меню */
+border: none;
+box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+padding: 0.5rem 0;
+}
+/* Стиль для пунктов меню внутри dropdown /
+.navbar-nav .dropdown-menu .dropdown-item {
+color: #fff !important; / Белый текст */
+font-weight: 600;
+padding: 10px 20px;
+transition: background-color 0.2s;
+}
+/* Ховер и активный пункт - гораздо светлее */
+.navbar-nav .dropdown-menu .dropdown-item:hover,
+.navbar-nav .dropdown-menu .dropdown-item:focus {
+background-color: #282a32 !important;
+color: #fff !important;
+}
+@media (min-width: 992px) {
+.navbar-nav .dropdown:hover .dropdown-menu {
+display: block;
+margin-top: 0;
+}
+}
+
+
+
+Нет, ни один  из вариантов не помог
+Скорее всего дело в том, что мы переписали класс, на который ориентировался скрипт , чтобы открывать меню в мобильной версии черезбургер
+Проанализируй скрипт, который у нас имеется, и выбери наилучший вариант исправления данного бага
+script.js:
+
+
+(function(window) {
+
+	if (!window.BX || BX.CatalogMenu)
+		return;
+
+	BX.CatalogMenu = {
+		items : {},
+		idCnt : 1,
+		currentItem : null,
+		overItem : null,
+		outItem : null,
+		timeoutOver : null,
+		timeoutOut : null,
+
+		getItem : function(item)
+		{
+			if (!BX.type.isDomNode(item))
+				return null;
+
+			var id = !item.id || !BX.type.isNotEmptyString(item.id) ? (item.id = "menu-item-" + this.idCnt++) : item.id;
+
+			if (!this.items[id])
+				this.items[id] = new CatalogMenuItem(item);
+
+			return this.items[id];
+		},
+
+		itemOver : function(item)
+		{
+			var menuItem = this.getItem(item);
+			if (!menuItem)
+				return;
+
+			if (this.outItem == menuItem)
+			{
+				clearTimeout(menuItem.timeoutOut);
+			}
+
+			this.overItem = menuItem;
+
+			if (menuItem.timeoutOver)
+			{
+				clearTimeout(menuItem.timeoutOver);
+			}
+
+			menuItem.timeoutOver = setTimeout(function() {
+				if (BX.CatalogMenu.overItem == menuItem)
+				{
+					menuItem.itemOver();
+				}
+
+			}, 100);
+		},
+
+		itemOut : function(item)
+		{
+			var menuItem = this.getItem(item);
+			if (!menuItem)
+				return;
+
+			this.outItem = menuItem;
+
+			if (menuItem.timeoutOut)
+			{
+				clearTimeout(menuItem.timeoutOut);
+			}
+
+			menuItem.timeoutOut = setTimeout(function() {
+
+				if (menuItem != BX.CatalogMenu.overItem)
+				{
+					menuItem.itemOut();
+				}
+				if (menuItem == BX.CatalogMenu.outItem)
+				{
+					menuItem.itemOut();
+				}
+
+			}, 100);
+		},
+
+		removeHover : function(curItem)
+		{
+			if (typeof curItem !== "object")
+				return false;
+
+			var items = curItem.parentNode.querySelectorAll('[data-role="bx-menu-item"]');
+			for (var i=0; i<items.length; i++)
+			{
+				if (curItem == items[i])
+					continue;
+
+				if (BX.hasClass(items[i], "bx-hover"))
+					BX.removeClass(items[i], "bx-hover")
+			}
+		}
+	};
+
+	var CatalogMenuItem = function(item)
+	{
+		this.element = item;
+		this.popup = BX.findChild(item, { className: "bx_children_container" }, false, false);
+		this.isLastItem = BX.lastChild(this.element.parentNode) == this.element;
+	};
+
+	CatalogMenuItem.prototype.itemOver = function()
+	{
+		if (!BX.hasClass(this.element, "bx-hover"))
+		{
+			BX.addClass(this.element, "bx-hover");
+
+			var popup = BX.findChild(this.element, {className:"bx-nav-2-lvl-container"}, true, false);
+			if (popup)
+			{
+				var popupRightEdge = popup.getBoundingClientRect().left + popup.offsetWidth;
+				if (popupRightEdge > document.body.clientWidth)
+					popup.style.right = 0;
+			}
+		}
+	};
+
+	CatalogMenuItem.prototype.itemOut = function()
+	{
+		BX.removeClass(this.element, "bx-hover");
+	};
+})(window);
+
+BX.namespace("BX.Main.MenuComponent");
+BX.Main.MenuComponent.CatalogHorizontal = (function()
+{
+	var CatalogHorizontal = function(menuBlockId, itemImgDesc)
+	{
+		this.menuBlockId = menuBlockId || "";
+		this.itemImgDesc = itemImgDesc || "";
+
+		this.resizeMenu();
+		BX.bind(window, "resize", BX.proxy(this.resizeMenu, this));
+	};
+
+	CatalogHorizontal.prototype.clickInMobile = function(element, event)
+	{
+		if (!BX.hasClass(element, "bx-hover"))
+		{
+			event.preventDefault();
+		}
+	};
+
+	CatalogHorizontal.prototype.toggleInMobile = function(element)
+	{
+		var parentObj = BX.findParent(element, {className: "bx-nav-parent"});
+		var arrow = element.firstChild;
+		if (BX.hasClass(parentObj, "bx-opened"))
+		{
+			BX.removeClass(parentObj, "bx-opened");
+			BX.removeClass(arrow, "bx-nav-angle-top");
+			BX.addClass(arrow, "bx-nav-angle-bottom");
+		}
+		else
+		{
+			BX.addClass(parentObj, "bx-opened");
+			BX.addClass(arrow, "bx-nav-angle-top");
+			BX.removeClass(arrow, "bx-nav-angle-bottom");
+		}
+	};
+
+	CatalogHorizontal.prototype.resizeMenu = function()
+	{
+		var templateWrap = this.templateWrap;
+		var menuMobile = document.body.querySelector("[data-role='bx-menu-mobile']");
+		var menuMobileButton = document.body.querySelector("[data-role='bx-menu-button-mobile']");
+		var menuMobilePosition = document.body.querySelector("[data-role='bx-menu-button-mobile-position']");
+
+		if (document.body.clientWidth <= 767) //mobile
+		{
+			if (!menuMobile)
+			{
+				menuMobile = BX.create("div", {
+					attrs: {
+						className: "bx-aside-nav",
+						"data-role" : "bx-menu-mobile"
+					},
+					children: [ BX.clone(BX("ul_" + this.menuBlockId)) ]
+				});
+				document.body.insertBefore(menuMobile, document.body.firstChild);
+			}
+
+			if (!menuMobileButton)
+			{
+				menuMobileButton = BX.create("div", {
+					attrs: {className: "bx-aside-nav-control bx-closed", "data-role" : "bx-menu-button-mobile"},
+					children: [
+						BX.create("i", {
+							attrs: {className: "bx-nav-bars"}
+						})
+					],
+					events: {
+						"click" : function() {
+							if (BX.hasClass(this, "bx-opened"))
+							{
+								BX.removeClass(this, 'bx-opened');
+								BX.removeClass(menuMobile, 'bx-opened');
+								BX.addClass(this, 'bx-closed');
+								document.body.style.overflow = "";
+								BX.removeClass(document.body, 'bx-opened');
+							}
+							else
+							{
+
+								BX.addClass(this, 'bx-opened');
+								BX.addClass(menuMobile, 'bx-opened');
+								BX.removeClass(this, 'bx-closed');
+								document.body.style.overflow = "hidden";
+								BX.addClass(document.body, 'bx-opened');
+							}
+						}
+					}
+				});
+
+				// document.body.insertBefore(menuMobileButton, document.body.firstChild);
+
+				menuMobilePosition.appendChild(menuMobileButton);
+			}
+		}
+		else
+		{
+			BX.removeClass(menuMobile, 'bx-opened');
+			BX.removeClass(document.body, 'bx-opened');
+			document.body.style.overflow = "";
+
+			if (menuMobileButton)
+				BX.removeClass(menuMobileButton, 'bx-opened');
+		}
+	};
+
+	CatalogHorizontal.prototype.changeSectionPicure = function(element, itemId)
+	{
+		var curLi = BX.findParent(element, {className: "bx-nav-1-lvl"});
+		if (!curLi)
+			return;
+
+		var imgDescObj = curLi.querySelector("[data-role='desc-img-block']");
+		if (!imgDescObj)
+			return;
+
+		var imgObj = BX.findChild(imgDescObj, {tagName: "img"}, true, false);
+		if (imgObj)
+			imgObj.src = this.itemImgDesc[itemId]["PICTURE"];
+
+		var linkObj = BX.findChild(imgDescObj, {tagName: "a"}, true, false);
+		if (linkObj)
+			linkObj.href = element.href;
+
+		var descObj = BX.findChild(imgDescObj, {tagName: "p"}, true, false);
+		if (descObj)
+			descObj.innerHTML = this.itemImgDesc[itemId]["DESC"];
+
+	};
+
+	return CatalogHorizontal;
+})();
+
+
+

@@ -1,0 +1,11 @@
+.bx-footer-section .nav.flex-column.catalog {
+    max-height: 150px;
+}
+
+.bx-footer ul.nav.flex-column.catalog > li.catalog-section:first-child {
+    display: none;
+}
+
+.bx-footer li.nav-item {
+    margin-bottom: 8px;
+}

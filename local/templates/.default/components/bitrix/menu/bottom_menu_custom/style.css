@@ -1,0 +1,15 @@
+.bx-footer li.nav-item  a.nav-link:hover {
+    color: var(--primary-vetrina)!important;
+}
+
+@media (max-width: 576px){
+    .bx-footer-section .nav.flex-column {
+        max-height: 65px;
+    }
+}
+
+@media (max-width: 992px){
+    .bx-footer-section .nav .nav-item {
+        width: 50%;
+    }
+}

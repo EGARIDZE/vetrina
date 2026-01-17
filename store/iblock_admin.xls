@@ -1,0 +1,12 @@
+
+		<html>
+		<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<style>
+			td {mso-number-format:\@;}
+			.number0 {mso-number-format:0;}
+			.number2 {mso-number-format:Fixed;}
+		</style>
+		</head>
+		<body><table border="1"><tr><td>Название</td><td>Сорт.</td><td>Акт.</td><td>Элементов</td><td>Разделов</td><td>Сайт</td><td>Дата изм.</td><td>ID</td></tr><tr><td>Одежда</td><td align="right" class="number0">500</td><td align="center">Да</td><td align="right">0</td><td align="right">0</td><td align="left">s1</td><td>22.08.2025 00:40:53</td><td align="right" class="number0">2</td></tr></table></body></html>

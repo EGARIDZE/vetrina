@@ -1,0 +1,166 @@
+:root {
+	--primary-color: #00AB9A !important;
+	--secondary-color: #343a40 !important;
+	--light-gray: #f8f8f8;
+	--medium-gray: #e2dfdf;
+	--dark-gray: #999;
+	--white: #fff;
+	--orange: #ff6a00;
+	--red: #d0021b;
+	--blue: #3d9cea;
+	--blue-hover: #2882c5;
+	--border-radius-medium: 8px;
+	--border-radius-small: 6px;
+}
+
+/* --- Общие стили для обертки и заголовка --- */
+.catalog-categories__wrap {
+	margin-bottom: 40px;
+}
+
+.catalog-categories__title {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-end;
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+
+.catalog-categories__title .h2 {
+	font-size: 28px;
+	font-weight: bold;
+	margin: 0;
+}
+
+.catalog-categories__title .h2 a {
+	color: inherit;
+	text-decoration: none;
+    transition: color 0.2s ease; /* Добавлен плавный переход */
+}
+
+.catalog-categories__title .h2 a:hover {
+	color: var(--primary-color);
+}
+
+
+/* --- Сетка с подразделами --- */
+.catalog-categories {
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+/* --- Колонка (один подраздел) --- */
+.catalog-categories_col {
+	padding: 0 10px;
+	margin-bottom: 20px;
+	box-sizing: border-box;
+    /* ИЗМЕНЕНИЕ: Ширина по умолчанию для больших экранов (4 колонки) */
+    width: 25%;
+}
+
+/* --- Карточка подраздела --- */
+.catalog-categories-item {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	text-decoration: none;
+	border: 1px solid #e5e5e5;
+	border-radius: var(--border-radius-medium);
+	background-color: var(--white);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	overflow: hidden;
+}
+
+.catalog-categories-item:hover {
+	border-color: var(--primary-color);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	text-decoration: none; /* Убираем стандартное подчеркивание */
+}
+
+.catalog-categories-item:hover .link {
+	color: var(--primary-color);
+}
+
+.catalog-categories-item_img {
+	display: block;
+	padding: 15px;
+	aspect-ratio: 1 / 1;
+	box-sizing: border-box;
+}
+
+.catalog-categories-item_img img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+/* --- Текстовая часть карточки --- */
+.catalog-categories-item_info {
+	text-align: center;
+	padding: 0 15px 15px 15px;
+	margin-top: auto;
+}
+
+.catalog-categories-item_info .link {
+	font-size: 16px;
+	color: #333;
+	font-weight: 500;
+	margin: 0 0 5px 0;
+	display: block;
+	line-height: 1.3;
+	transition: color 0.2s ease;
+}
+
+.catalog-categories-item_info .p3.gray {
+	font-size: 14px;
+	color: #888;
+	margin: 0;
+}
+
+/* --- НОВОЕ: Адаптивность --- */
+
+/* Планшеты (3 колонки) */
+@media (max-width: 992px) {
+	.catalog-categories_col {
+		width: 33.333%;
+	}
+	.catalog-categories__title .h2 {
+		font-size: 26px;
+	}
+}
+
+/* Большие смартфоны и планшеты в портретной ориентации (2 колонки) */
+@media (max-width: 768px) {
+	.catalog-categories_col {
+		width: 50%;
+	}
+	.catalog-categories__title .h2 {
+		font-size: 24px;
+	}
+	.catalog-categories-item_info .link {
+		font-size: 15px;
+	}
+}
+
+/* Смартфоны */
+@media (max-width: 480px) {
+	.catalog-categories {
+		margin-left: -5px;
+		margin-right: -5px;
+	}
+	.catalog-categories_col {
+		padding: 0 5px;
+		margin-bottom: 10px;
+	}
+	.catalog-categories-item_info {
+		padding: 0 10px 10px 10px;
+	}
+	.catalog-categories-item_info .link {
+		font-size: 14px;
+	}
+	.catalog-categories-item_info .p3.gray {
+		font-size: 13px;
+	}
+}
