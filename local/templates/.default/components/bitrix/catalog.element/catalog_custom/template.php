@@ -837,7 +837,11 @@ $ingredients = $arResult["PROPERTIES"]["INGREDIENTS"];
 $additives = $arResult["PROPERTIES"]["ADDITIVES"];
 $analytical = $arResult["PROPERTIES"]["ANALYTICAL_COMPOSITION"];
 $feeding = $arResult["PROPERTIES"]["FEEDING_RECOMMENDATIONS"];
-
+$compound = $arResult['PROPERTIES']['COMPOUND'];
+$analyticalCompound = $arResult['PROPERTIES']['ANALYTICAL_COMPOUND'];
+$indicationsContraindications = $arResult['PROPERTIES']['INDICATIONS_CONTRAINDICATIONS'];
+$usageDosage = $arResult['PROPERTIES']['USAGE_DOSAGE'];
+$material = $arResult['PROPERTIES']['MATERIAL'];
 ?>
 
 <div class="row">
@@ -1062,7 +1066,98 @@ $feeding = $arResult["PROPERTIES"]["FEEDING_RECOMMENDATIONS"];
 				</div>
 				<?php
 			}
+
+            // Пункт 7: Состав
+            if (!empty($compound['VALUE']['TEXT'])) {
+                ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $compound["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="ingredients">
+                            <?= $compound["VALUE"]["TYPE"] === 'HTML' ? $compound["~VALUE"]["TEXT"] : '<p>' . $compound["VALUE"]["TEXT"] . '</p>'; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+
 			?>
+
+            <?
+            // Пункт 8: Аналитический состав
+            if (!empty($analyticalCompound['VALUE']['TEXT'])) { ?>
+            <div class="product-accordion-item">
+                <h2 class="product-accordion-header">
+                    <button type="button" class="product-accordion-button" aria-expanded="false">
+                        <?= $analyticalCompound["NAME"] ?>
+                    </button>
+                </h2>
+                <div class="product-accordion-collapse">
+                    <div class="product-accordion-body" itemprop="ingredients">
+                        <?= $analyticalCompound["VALUE"]["TYPE"] === 'HTML' ? $analyticalCompound["~VALUE"]["TEXT"] : '<p>' . $analyticalCompound["VALUE"]["TEXT"] . '</p>'; ?>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+
+            <?php
+            // Пункт 9: Показания/противопоказания к применению
+            if (!empty($indicationsContraindications['VALUE']['TEXT'])) { ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $indicationsContraindications["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="additionalProperty">
+                            <?= $indicationsContraindications["VALUE"]["TYPE"] === 'HTML'
+                                ? $indicationsContraindications["~VALUE"]["TEXT"]
+                                : '<p>' . $indicationsContraindications["VALUE"]["TEXT"] . '</p>'; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php }
+
+            // Пункт 10: Способ применения (Дозировка)
+            if (!empty($usageDosage['VALUE']['TEXT'])) { ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $usageDosage["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="additionalProperty">
+                            <?= $usageDosage["VALUE"]["TYPE"] === 'HTML'
+                                ? $usageDosage["~VALUE"]["TEXT"]
+                                : '<p>' . $usageDosage["VALUE"]["TEXT"] . '</p>'; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php }
+
+            // Пункт 11: Материал
+            if (!empty($material['VALUE']['TEXT'])) { ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $material["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="material">
+                            <?= is_array($material['VALUE'])
+                                ? implode(' / ', $material['VALUE'])
+                                : $material['VALUE']; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
 		</div>
 	</div>
 	<?php
