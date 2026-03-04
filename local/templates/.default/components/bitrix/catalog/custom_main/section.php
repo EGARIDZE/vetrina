@@ -12,6 +12,7 @@ $this->setFrameMode(true);
 $isFilter = ($arParams['USE_FILTER'] === 'Y');
 $isSidebar = ($arParams["SIDEBAR_SECTION_SHOW"] === "Y" && !empty($arParams["SIDEBAR_PATH"]));
 $showSidebar = $isFilter || $isSidebar;
+$depthLevel = false;
 
 // Получаем ID текущей секции для работы фильтра. Этот блок необходим.
 if ($isFilter) {
@@ -32,16 +33,22 @@ if ($isFilter) {
 	} elseif ($obCache->StartDataCache()) {
 		$arCurSection = array();
 		if (Loader::includeModule("iblock")) {
-			$dbRes = CIBlockSection::GetList(array(), $arFilter, false, array("ID"));
+			$dbRes = CIBlockSection::GetList(array(), $arFilter, false, array("ID", "DEPTH_LEVEL"));
 			if (defined("BX_COMP_MANAGED_CACHE")) {
 				global $CACHE_MANAGER;
 				$CACHE_MANAGER->StartTagCache("/iblock/catalog");
 				if ($arCurSection = $dbRes->Fetch()) {
+                    if ($arCurSection['DEPTH_LEVEL'] > 1) {
+                        $depthLevel = true;
+                    }
 					$CACHE_MANAGER->RegisterTag("iblock_id_" . $arParams["IBLOCK_ID"]);
 				}
 				$CACHE_MANAGER->EndTagCache();
 			} else {
 				if (!$arCurSection = $dbRes->Fetch()) {
+                    if ($arCurSection['DEPTH_LEVEL'] > 1) {
+                        $depthLevel = true;
+                    }
 					$arCurSection = array();
 				}
 			}
@@ -58,24 +65,26 @@ if ($isFilter) {
 	<? // --- Левая колонка (сайдбар) --- ?>
 	<? if ($showSidebar): ?>
 		<div class="col-md-3 col-sm-4">
-
 			<? // Меню каталога
-			$APPLICATION->IncludeComponent(
-				"bitrix:menu",
-				"catalog_custom", // Ваш кастомный шаблон меню
-				array(
-					"ROOT_MENU_TYPE" => "left",
-					"MENU_CACHE_TYPE" => "A",
-					"MENU_CACHE_TIME" => "36000000",
-					"MENU_CACHE_USE_GROUPS" => "Y",
-					"MAX_LEVEL" => "3",
-					"CHILD_MENU_TYPE" => "left",
-					"USE_EXT" => "Y",
-					"DELAY" => "N",
-					"ALLOW_MULTI_SELECT" => "Y", // Важно для подсветки и раскрытия разделов
-				),
-				false
-			); ?>
+            if (!$depthLevel) {
+                $APPLICATION->IncludeComponent(
+                    "bitrix:menu",
+                    "catalog_custom", // Ваш кастомный шаблон меню
+                    array(
+                        "ROOT_MENU_TYPE" => "left",
+                        "MENU_CACHE_TYPE" => "A",
+                        "MENU_CACHE_TIME" => "36000000",
+                        "MENU_CACHE_USE_GROUPS" => "Y",
+                        "MAX_LEVEL" => "3",
+                        "CHILD_MENU_TYPE" => "left",
+                        "USE_EXT" => "Y",
+                        "DELAY" => "N",
+                        "ALLOW_MULTI_SELECT" => "Y", // Важно для подсветки и раскрытия разделов
+                    ),
+                    false
+                );
+            }
+            ?>
 
 			<? // Умный фильтр
 			if ($isFilter): ?>
