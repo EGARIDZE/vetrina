@@ -847,227 +847,39 @@ $material = $arResult['PROPERTIES']['MATERIAL'];
 <div class="row">
 	<div class="col-md-12 col-lg-9">
 		<div class="product-accordion">
-			<?php
-			// Пункт 1: Описание
-			if ($showDescription) {
-				?>
-				<div class="product-accordion-item">
-					<h2 class="product-accordion-header">
-						<button type="button" class="product-accordion-button" aria-expanded="true">
-							<?= $arParams['MESS_DESCRIPTION_TAB'] ?>
-						</button>
-					</h2>
-					<div class="product-accordion-collapse" style="max-height: 5000px;">
-						<!-- Устанавливаем большую высоту, JS ее скорректирует -->
-						<div class="product-accordion-body" itemprop="description">
-							<?php
-							if (
-								$arResult['PREVIEW_TEXT'] != ''
-								&& ($arParams['DISPLAY_PREVIEW_TEXT_MODE'] === 'S' || ($arParams['DISPLAY_PREVIEW_TEXT_MODE'] === 'E' && $arResult['DETAIL_TEXT'] == ''))
-							) {
-								echo $arResult['PREVIEW_TEXT_TYPE'] === 'html' ? $arResult['PREVIEW_TEXT'] : '<p>' . $arResult['PREVIEW_TEXT'] . '</p>';
-							}
 
-							if ($arResult['DETAIL_TEXT'] != '') {
-								echo $arResult['DETAIL_TEXT_TYPE'] === 'html' ? $arResult['DETAIL_TEXT'] : '<p>' . $arResult['DETAIL_TEXT'] . '</p>';
-							}
-							?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
+            <?php
+            // Пункт 1: Описание
+            if ($showDescription) {
+                ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="true">
+                            <?= $arParams['MESS_DESCRIPTION_TAB'] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse" style="max-height: 5000px;">
+                        <!-- Устанавливаем большую высоту, JS ее скорректирует -->
+                        <div class="product-accordion-body" itemprop="description">
+                            <?php
+                            if (
+                                $arResult['PREVIEW_TEXT'] != ''
+                                && ($arParams['DISPLAY_PREVIEW_TEXT_MODE'] === 'S' || ($arParams['DISPLAY_PREVIEW_TEXT_MODE'] === 'E' && $arResult['DETAIL_TEXT'] == ''))
+                            ) {
+                                echo $arResult['PREVIEW_TEXT_TYPE'] === 'html' ? $arResult['PREVIEW_TEXT'] : '<p>' . $arResult['PREVIEW_TEXT'] . '</p>';
+                            }
 
-			// Пункт 2: Ингредиенты
-			if (!empty($ingredients["VALUE"]["TEXT"])) {
-				?>
-				<div class="product-accordion-item">
-					<h2 class="product-accordion-header">
-						<button type="button" class="product-accordion-button" aria-expanded="false">
-							<?= $ingredients["NAME"] ?>
-						</button>
-					</h2>
-					<div class="product-accordion-collapse">
-						<div class="product-accordion-body" itemprop="ingredients">
-							<?= $ingredients["VALUE"]["TYPE"] === 'HTML' ? $ingredients["~VALUE"]["TEXT"] : '<p>' . $ingredients["VALUE"]["TEXT"] . '</p>'; ?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
+                            if ($arResult['DETAIL_TEXT'] != '') {
+                                echo $arResult['DETAIL_TEXT_TYPE'] === 'html' ? $arResult['DETAIL_TEXT'] : '<p>' . $arResult['DETAIL_TEXT'] . '</p>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
 
-			// Пункт 3: Добавки
-			if (!empty($additives["VALUE"]["TEXT"])) {
-				?>
-				<div class="product-accordion-item">
-					<h2 class="product-accordion-header">
-						<button type="button" class="product-accordion-button" aria-expanded="false">
-							<?= $additives["NAME"] ?>
-						</button>
-					</h2>
-					<div class="product-accordion-collapse">
-						<div class="product-accordion-body" itemprop="additives">
-							<?= $additives["VALUE"]["TYPE"] === 'HTML' ? $additives["~VALUE"]["TEXT"] : '<p>' . $additives["VALUE"]["TEXT"] . '</p>'; ?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
-
-			// Пункт 4: Аналитический состав
-			if (!empty($analytical["VALUE"]["TEXT"])) {
-				?>
-				<div class="product-accordion-item">
-					<h2 class="product-accordion-header">
-						<button type="button" class="product-accordion-button" aria-expanded="false">
-							<?= $analytical["NAME"] ?>
-						</button>
-					</h2>
-					<div class="product-accordion-collapse">
-						<div class="product-accordion-body" itemprop="analytical">
-							<?= $analytical["VALUE"]["TYPE"] === 'HTML' ? $analytical["~VALUE"]["TEXT"] : '<p>' . $analytical["VALUE"]["TEXT"] . '</p>'; ?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
-
-			// Пункт 5: Рекомендации по кормлению
-			if (!empty($feeding["VALUE"]["TEXT"])) {
-				?>
-				<div class="product-accordion-item">
-					<h2 class="product-accordion-header">
-						<button type="button" class="product-accordion-button" aria-expanded="false">
-							<?= $feeding["NAME"] ?>
-						</button>
-					</h2>
-					<div class="product-accordion-collapse">
-						<div class="product-accordion-body" itemprop="feeding">
-							<?= $feeding["VALUE"]["TYPE"] === 'HTML' ? $feeding["~VALUE"]["TEXT"] : '<p>' . $feeding["VALUE"]["TEXT"] . '</p>'; ?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
-
-
-			// Пункт 5: Рекомендации по кормлению
-			if (!empty($arResult['DISPLAY_PROPERTIES']) || $arResult['SHOW_OFFERS_PROPS']) {
-
-				?>
-				<div class="product-accordion-item">
-					<h2 class="product-accordion-header">
-						<button type="button" class="product-accordion-button" aria-expanded="false">
-							<?= $arParams['MESS_PROPERTIES_TAB'] ?>
-						</button>
-					</h2>
-					<div class="product-accordion-collapse">
-						<div class="product-accordion-body" itemprop="properties">
-							<?php
-							if (!empty($arResult['DISPLAY_PROPERTIES'])) {
-								?>
-								<ul class="product-item-detail-properties">
-									<!-- тут -->
-									<?php
-									foreach ($arResult['DISPLAY_PROPERTIES'] as $property) {
-										?>
-										<li class="product-item-detail-properties-item">
-											<span class="product-item-detail-properties-name"><?= $property['NAME'] ?></span>
-											<span class="product-item-detail-properties-dots"></span>
-											<span class="product-item-detail-properties-value">
-												<?= (
-													is_array($property['DISPLAY_VALUE'])
-													? implode(' / ', $property['DISPLAY_VALUE'])
-													: $property['DISPLAY_VALUE']
-												) ?>
-											</span>
-										</li>
-										<?php
-									}
-									unset($property);
-									?>
-								</ul>
-								<?php
-							}
-
-							if ($arResult['SHOW_OFFERS_PROPS']) {
-								?>
-								<ul class="product-item-detail-properties" id="<?= $itemIds['DISPLAY_PROP_DIV'] ?>"></ul>
-								<?php
-							}
-							?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
-
-
-			// Пункт 6: Комментарии
-			if ($arParams['USE_COMMENTS'] === 'Y') {
-				?>
-				<div class="product-accordion-item">
-					<h2 class="product-accordion-header">
-						<button type="button" class="product-accordion-button" aria-expanded="false">
-							<?= $arParams['MESS_COMMENTS_TAB'] ?>
-						</button>
-					</h2>
-					<div class="product-accordion-collapse">
-						<div class="product-accordion-body">
-							<?php
-							$componentCommentsParams = array(
-								'ELEMENT_ID' => $arResult['ID'],
-								'ELEMENT_CODE' => '',
-								'IBLOCK_ID' => $arParams['IBLOCK_ID'],
-								'SHOW_DEACTIVATED' => $arParams['SHOW_DEACTIVATED'],
-								'URL_TO_COMMENT' => '',
-								'WIDTH' => '',
-								'COMMENTS_COUNT' => '5',
-								'BLOG_USE' => $arParams['BLOG_USE'],
-								'FB_USE' => $arParams['FB_USE'],
-								'FB_APP_ID' => $arParams['FB_APP_ID'],
-								'VK_USE' => $arParams['VK_USE'],
-								'VK_API_ID' => $arParams['VK_API_ID'],
-								'CACHE_TYPE' => $arParams['CACHE_TYPE'],
-								'CACHE_TIME' => $arParams['CACHE_TIME'],
-								'CACHE_GROUPS' => $arParams['CACHE_GROUPS'],
-								'BLOG_TITLE' => '',
-								'BLOG_URL' => $arParams['BLOG_URL'],
-								'PATH_TO_SMILE' => '',
-								'EMAIL_NOTIFY' => $arParams['BLOG_EMAIL_NOTIFY'],
-								'AJAX_POST' => 'Y',
-								'SHOW_SPAM' => 'Y',
-								'SHOW_RATING' => 'N',
-								'FB_TITLE' => '',
-								'FB_USER_ADMIN_ID' => '',
-								'FB_COLORSCHEME' => 'light',
-								'FB_ORDER_BY' => 'reverse_time',
-								'VK_TITLE' => '',
-								'TEMPLATE_THEME' => $arParams['~TEMPLATE_THEME']
-							);
-							if (isset($arParams["USER_CONSENT"]))
-								$componentCommentsParams["USER_CONSENT"] = $arParams["USER_CONSENT"];
-							if (isset($arParams["USER_CONSENT_ID"]))
-								$componentCommentsParams["USER_CONSENT_ID"] = $arParams["USER_CONSENT_ID"];
-							if (isset($arParams["USER_CONSENT_IS_CHECKED"]))
-								$componentCommentsParams["USER_CONSENT_IS_CHECKED"] = $arParams["USER_CONSENT_IS_CHECKED"];
-							if (isset($arParams["USER_CONSENT_IS_LOADED"]))
-								$componentCommentsParams["USER_CONSENT_IS_LOADED"] = $arParams["USER_CONSENT_IS_LOADED"];
-							$APPLICATION->IncludeComponent(
-								'bitrix:catalog.comments',
-								'',
-								$componentCommentsParams,
-								$component,
-								array('HIDE_ICONS' => 'Y')
-							);
-							?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
-
-            // Пункт 7: Состав
+            // Пункт 2: Состав
             if (!empty($compound['VALUE']['TEXT'])) {
                 ?>
                 <div class="product-accordion-item">
@@ -1085,27 +897,77 @@ $material = $arResult['PROPERTIES']['MATERIAL'];
                 <?php
             }
 
-			?>
-
-            <?
-            // Пункт 8: Аналитический состав
-            if (!empty($analyticalCompound['VALUE']['TEXT'])) { ?>
-            <div class="product-accordion-item">
-                <h2 class="product-accordion-header">
-                    <button type="button" class="product-accordion-button" aria-expanded="false">
-                        <?= $analyticalCompound["NAME"] ?>
-                    </button>
-                </h2>
-                <div class="product-accordion-collapse">
-                    <div class="product-accordion-body" itemprop="ingredients">
-                        <?= $analyticalCompound["VALUE"]["TYPE"] === 'HTML' ? $analyticalCompound["~VALUE"]["TEXT"] : '<p>' . $analyticalCompound["VALUE"]["TEXT"] . '</p>'; ?>
+            // Пункт 3: Ингредиенты
+            if (!empty($ingredients["VALUE"]["TEXT"])) {
+                ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $ingredients["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="ingredients">
+                            <?= $ingredients["VALUE"]["TYPE"] === 'HTML' ? $ingredients["~VALUE"]["TEXT"] : '<p>' . $ingredients["VALUE"]["TEXT"] . '</p>'; ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php } ?>
+                <?php
+            }
 
-            <?php
-            // Пункт 9: Показания/противопоказания к применению
+            // Пункт 4: Материал
+            if (!empty($material['VALUE']['TEXT'])) { ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $material["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="material">
+                            <?= is_array($material['VALUE'])
+                                ? implode(' / ', $material['VALUE'])
+                                : $material['VALUE']; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php }
+
+            // Пункт 5: Добавки
+            if (!empty($additives["VALUE"]["TEXT"])) {
+                ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $additives["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="additives">
+                            <?= $additives["VALUE"]["TYPE"] === 'HTML' ? $additives["~VALUE"]["TEXT"] : '<p>' . $additives["VALUE"]["TEXT"] . '</p>'; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+
+            // Пункт 6: Аналитический состав
+            if (!empty($analyticalCompound['VALUE']['TEXT'])) { ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $analyticalCompound["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="ingredients">
+                            <?= $analyticalCompound["VALUE"]["TYPE"] === 'HTML' ? $analyticalCompound["~VALUE"]["TEXT"] : '<p>' . $analyticalCompound["VALUE"]["TEXT"] . '</p>'; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php }
+
+            // Пункт 7: Показания/противопоказания к применению
             if (!empty($indicationsContraindications['VALUE']['TEXT'])) { ?>
                 <div class="product-accordion-item">
                     <h2 class="product-accordion-header">
@@ -1123,7 +985,25 @@ $material = $arResult['PROPERTIES']['MATERIAL'];
                 </div>
             <?php }
 
-            // Пункт 10: Способ применения (Дозировка)
+            // Пункт 8: Рекомендации по кормлению
+            if (!empty($feeding["VALUE"]["TEXT"])) {
+                ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $feeding["NAME"] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="feeding">
+                            <?= $feeding["VALUE"]["TYPE"] === 'HTML' ? $feeding["~VALUE"]["TEXT"] : '<p>' . $feeding["VALUE"]["TEXT"] . '</p>'; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+
+            // Пункт 9: Способ применения (Дозировка)
             if (!empty($usageDosage['VALUE']['TEXT'])) { ?>
                 <div class="product-accordion-item">
                     <h2 class="product-accordion-header">
@@ -1141,23 +1021,123 @@ $material = $arResult['PROPERTIES']['MATERIAL'];
                 </div>
             <?php }
 
-            // Пункт 11: Материал
-            if (!empty($material['VALUE']['TEXT'])) { ?>
+            // Пункт 10: Комментарии (неактивен)
+            if ($arParams['USE_COMMENTS'] === 'Y') {
+                ?>
                 <div class="product-accordion-item">
                     <h2 class="product-accordion-header">
                         <button type="button" class="product-accordion-button" aria-expanded="false">
-                            <?= $material["NAME"] ?>
+                            <?= $arParams['MESS_COMMENTS_TAB'] ?>
                         </button>
                     </h2>
                     <div class="product-accordion-collapse">
-                        <div class="product-accordion-body" itemprop="material">
-                            <?= is_array($material['VALUE'])
-                                ? implode(' / ', $material['VALUE'])
-                                : $material['VALUE']; ?>
+                        <div class="product-accordion-body">
+                            <?php
+                            $componentCommentsParams = array(
+                                'ELEMENT_ID' => $arResult['ID'],
+                                'ELEMENT_CODE' => '',
+                                'IBLOCK_ID' => $arParams['IBLOCK_ID'],
+                                'SHOW_DEACTIVATED' => $arParams['SHOW_DEACTIVATED'],
+                                'URL_TO_COMMENT' => '',
+                                'WIDTH' => '',
+                                'COMMENTS_COUNT' => '5',
+                                'BLOG_USE' => $arParams['BLOG_USE'],
+                                'FB_USE' => $arParams['FB_USE'],
+                                'FB_APP_ID' => $arParams['FB_APP_ID'],
+                                'VK_USE' => $arParams['VK_USE'],
+                                'VK_API_ID' => $arParams['VK_API_ID'],
+                                'CACHE_TYPE' => $arParams['CACHE_TYPE'],
+                                'CACHE_TIME' => $arParams['CACHE_TIME'],
+                                'CACHE_GROUPS' => $arParams['CACHE_GROUPS'],
+                                'BLOG_TITLE' => '',
+                                'BLOG_URL' => $arParams['BLOG_URL'],
+                                'PATH_TO_SMILE' => '',
+                                'EMAIL_NOTIFY' => $arParams['BLOG_EMAIL_NOTIFY'],
+                                'AJAX_POST' => 'Y',
+                                'SHOW_SPAM' => 'Y',
+                                'SHOW_RATING' => 'N',
+                                'FB_TITLE' => '',
+                                'FB_USER_ADMIN_ID' => '',
+                                'FB_COLORSCHEME' => 'light',
+                                'FB_ORDER_BY' => 'reverse_time',
+                                'VK_TITLE' => '',
+                                'TEMPLATE_THEME' => $arParams['~TEMPLATE_THEME']
+                            );
+                            if (isset($arParams["USER_CONSENT"]))
+                                $componentCommentsParams["USER_CONSENT"] = $arParams["USER_CONSENT"];
+                            if (isset($arParams["USER_CONSENT_ID"]))
+                                $componentCommentsParams["USER_CONSENT_ID"] = $arParams["USER_CONSENT_ID"];
+                            if (isset($arParams["USER_CONSENT_IS_CHECKED"]))
+                                $componentCommentsParams["USER_CONSENT_IS_CHECKED"] = $arParams["USER_CONSENT_IS_CHECKED"];
+                            if (isset($arParams["USER_CONSENT_IS_LOADED"]))
+                                $componentCommentsParams["USER_CONSENT_IS_LOADED"] = $arParams["USER_CONSENT_IS_LOADED"];
+                            $APPLICATION->IncludeComponent(
+                                'bitrix:catalog.comments',
+                                '',
+                                $componentCommentsParams,
+                                $component,
+                                array('HIDE_ICONS' => 'Y')
+                            );
+                            ?>
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+                <?php
+            }
+
+            // Пункт 11: Характеристики
+            if (!empty($arResult['DISPLAY_PROPERTIES']) || $arResult['SHOW_OFFERS_PROPS']) {
+
+                ?>
+                <div class="product-accordion-item">
+                    <h2 class="product-accordion-header">
+                        <button type="button" class="product-accordion-button" aria-expanded="false">
+                            <?= $arParams['MESS_PROPERTIES_TAB'] ?>
+                        </button>
+                    </h2>
+                    <div class="product-accordion-collapse">
+                        <div class="product-accordion-body" itemprop="properties">
+                            <?php
+                            if (!empty($arResult['DISPLAY_PROPERTIES'])) {
+                                ?>
+                                <ul class="product-item-detail-properties">
+                                    <!-- тут -->
+                                    <?php
+                                    foreach ($arResult['DISPLAY_PROPERTIES'] as $property) {
+                                        ?>
+                                        <li class="product-item-detail-properties-item">
+                                            <span class="product-item-detail-properties-name"><?= $property['NAME'] ?></span>
+                                            <span class="product-item-detail-properties-dots"></span>
+                                            <span class="product-item-detail-properties-value">
+												<?= (
+                                                is_array($property['DISPLAY_VALUE'])
+                                                    ? implode(' / ', $property['DISPLAY_VALUE'])
+                                                    : $property['DISPLAY_VALUE']
+                                                ) ?>
+											</span>
+                                        </li>
+                                        <?php
+                                    }
+                                    unset($property);
+                                    ?>
+                                </ul>
+                                <?php
+                            }
+
+                            if ($arResult['SHOW_OFFERS_PROPS']) {
+                                ?>
+                                <ul class="product-item-detail-properties" id="<?= $itemIds['DISPLAY_PROP_DIV'] ?>"></ul>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+
+            ?>
+
 		</div>
 	</div>
 	<?php
