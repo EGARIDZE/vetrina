@@ -925,9 +925,7 @@ $material = $arResult['PROPERTIES']['MATERIAL'];
                     </h2>
                     <div class="product-accordion-collapse">
                         <div class="product-accordion-body" itemprop="material">
-                            <?= is_array($material['VALUE'])
-                                ? implode(' / ', $material['VALUE'])
-                                : $material['VALUE']; ?>
+                            <?= $material["VALUE"]["TYPE"] === 'HTML' ? $material["~VALUE"]["TEXT"] : '<p>' . $material["VALUE"]["TEXT"] . '</p>'; ?>
                         </div>
                     </div>
                 </div>
